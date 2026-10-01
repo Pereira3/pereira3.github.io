@@ -1,0 +1,15 @@
+.status {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.625rem;
+  margin-top: 2.5rem;
+  font-weight: 600;
+}
+
+.status::before {
+  content: "";
+  width: 0.625rem;
+  height: 0.625rem;
+  border-radius: 50%;
+  background: var(--accent);
+}

@@ -1,0 +1,65 @@
+.shell {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  min-height: 100%;
+}
+
+.main {
+  min-width: 0;
+}
+
+.content {
+  padding: clamp(2.5rem, 7vw, 5.5rem) clamp(1.25rem, 6vw, 4.5rem) 4rem;
+}
+
+.topBar {
+  display: none;
+}
+
+.scrim {
+  display: none;
+}
+
+@media (max-width: 767.98px) {
+  .shell {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto 1fr;
+  }
+
+  .topBar {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 0.75rem;
+    background: var(--sidebar-bg);
+    color: var(--sidebar-text-strong);
+  }
+
+  .topBar :focus-visible {
+    outline-color: var(--accent);
+  }
+
+  .menuButton {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.5rem;
+    height: 2.5rem;
+    border: 0;
+    border-radius: 8px;
+    background: transparent;
+    color: inherit;
+    cursor: pointer;
+  }
+
+  .scrim {
+    display: block;
+    position: fixed;
+    inset: 0;
+    z-index: 15;
+    background: rgba(10, 12, 18, 0.5);
+  }
+}

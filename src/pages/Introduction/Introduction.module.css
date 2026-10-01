@@ -1,0 +1,27 @@
+.name {
+  font-size: clamp(2.75rem, 8vw, 4.75rem);
+  font-weight: 750;
+  line-height: 1;
+  letter-spacing: -0.035em;
+}
+
+.role {
+  margin-top: 0.75rem;
+  font-size: 1.25rem;
+  color: var(--text-muted);
+}
+
+.intro {
+  margin-top: 2.5rem;
+  white-space: pre-line; /* shows \n in the text as line breaks */
+}
+
+.links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1.75rem;
+  margin: 2.5rem 0 0;
+  padding: 0;
+  list-style: none;
+  font-weight: 600;
+}

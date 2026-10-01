@@ -1,0 +1,8 @@
+/* One project per row, each card stretching across the whole panel. */
+.list {
+  display: grid;
+  gap: 1.25rem;
+  margin: 2.5rem 0 0;
+  padding: 0;
+  list-style: none;
+}

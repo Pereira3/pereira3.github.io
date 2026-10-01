@@ -1,0 +1,105 @@
+@import "./loading.css";
+
+/* Design tokens: change colors and sizes here and the whole site follows. */
+:root {
+  --font:
+    "Bricolage Grotesque Variable", system-ui, -apple-system, "Segoe UI",
+    sans-serif;
+
+  --page-bg: #f6f7f9;
+  --text: #1b1f2a;
+  --text-muted: #5b6375;
+  --rule: #dde1e8;
+
+  --sidebar-bg: #1e2433;
+  --sidebar-text: #c3c9d8;
+  --sidebar-text-strong: #ffffff;
+  --sidebar-hover: rgba(255, 255, 255, 0.06);
+  --sidebar-rule: rgba(255, 255, 255, 0.1);
+
+  --accent: #f2b544;
+
+  --sidebar-width: 15rem;
+  --sidebar-width-collapsed: 4.5rem;
+  --content-width: 42rem;
+  --speed: 220ms;
+
+  color-scheme: light dark;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --page-bg: #1a1e28;
+    --surface: #212634;
+    --text: #e8ebf2;
+    --text-muted: #9aa3b5;
+    --rule: #2c3242;
+    --sidebar-bg: #12151e;
+    --content-width: 42rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --speed: 0ms;
+  }
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  height: 100%;
+}
+
+body {
+  font-family: var(--font);
+  font-size: 1.0625rem;
+  line-height: 1.6;
+  color: var(--text);
+  background: var(--page-bg);
+  -webkit-font-smoothing: antialiased;
+}
+
+#root {
+  height: 100%;
+}
+
+h1,
+h2,
+h3 {
+  line-height: 1.15;
+  margin: 0;
+}
+
+p {
+  margin: 0;
+}
+
+a {
+  color: inherit;
+}
+
+:focus-visible {
+  outline: 2px solid var(--text);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* Hides text visually but keeps it readable by screen readers. */
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
