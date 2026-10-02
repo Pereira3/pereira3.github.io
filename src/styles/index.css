@@ -1,42 +1,52 @@
 @import "./loading.css";
 
-/* Design tokens: change colors and sizes here and the whole site follows. */
+/*
+  Design tokens: change colors and sizes here and the whole site follows.
+  Each color is written as light-dark(light mode, dark mode).
+  Light mode uses the blues e3f2fd → 0d47a1, dark mode the blues 012a4a → a9d6e5.
+  White, the near-white dark-mode text and the darker dark-mode sidebar are the only extras.
+*/
 :root {
-  --font:
-    "Bricolage Grotesque Variable", system-ui, -apple-system, "Segoe UI",
-    sans-serif;
+  /* Follows the system setting until the visitor picks a theme with the toggle. */
+  color-scheme: light dark;
 
-  --page-bg: #f6f7f9;
-  --text: #1b1f2a;
-  --text-muted: #5b6375;
-  --rule: #dde1e8;
+  --font: "Bricolage Grotesque Variable", system-ui, -apple-system, "Segoe UI", sans-serif;
 
-  --sidebar-bg: #1e2433;
-  --sidebar-text: #c3c9d8;
-  --sidebar-text-strong: #ffffff;
-  --sidebar-hover: rgba(255, 255, 255, 0.06);
-  --sidebar-rule: rgba(255, 255, 255, 0.1);
+  --page-bg: light-dark(#e3f2fd, #012a4a);
+  --surface: light-dark(#ffffff, #013a63);
+  --surface-hover: light-dark(#e3f2fd, #014f86);
+  --text: light-dark(#0d47a1, #e8f4f8);
+  --text-muted: light-dark(#1565c0, #89c2d9);
+  --rule: light-dark(#bbdefb, #014f86);
+  --accent: light-dark(#1e88e5, #61a5c2);
+  --accent-soft: light-dark(#90caf9, #a9d6e5);
+  /* Light mode: white cards lifted by a soft shadow. Dark mode: flat cards with a border. */
+  --card-border: light-dark(transparent, #014f86);
+  --card-shadow: light-dark(rgba(13, 71, 161, 0.1), transparent);
+  --card-shadow-hover: light-dark(rgba(13, 71, 161, 0.2), rgba(0, 0, 0, 0.45));
 
-  --accent: #f2b544;
+  --sidebar-bg: light-dark(#ffffff, #011f37);
+  --sidebar-text: light-dark(#1565c0, #a9d6e5);
+  --sidebar-text-muted: light-dark(#1976d2, #89c2d9);
+  --sidebar-text-strong: light-dark(#0d47a1, #ffffff);
+  --sidebar-hover: light-dark(#e3f2fd, rgba(169, 214, 229, 0.1));
+  --sidebar-rule: light-dark(#bbdefb, rgba(169, 214, 229, 0.16));
+  --sidebar-border: light-dark(transparent, rgba(169, 214, 229, 0.16));
+  --sidebar-accent: light-dark(#1976d2, #61a5c2);
+  --sidebar-shadow: light-dark(rgba(13, 71, 161, 0.1), rgba(0, 0, 0, 0.3));
 
   --sidebar-width: 15rem;
   --sidebar-width-collapsed: 4.5rem;
-  --content-width: 42rem;
   --speed: 220ms;
-
-  color-scheme: light dark;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --page-bg: #1a1e28;
-    --surface: #212634;
-    --text: #e8ebf2;
-    --text-muted: #9aa3b5;
-    --rule: #2c3242;
-    --sidebar-bg: #12151e;
-    --content-width: 42rem;
-  }
+/* Set by the theme toggle (and by public/theme-init.js on page load). */
+:root[data-theme="light"] {
+  color-scheme: light;
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -64,6 +74,27 @@ body {
   color: var(--text);
   background: var(--page-bg);
   -webkit-font-smoothing: antialiased;
+  cursor: default;
+}
+
+/* Only things you can click show the pointing hand. */
+a[href],
+button:not(:disabled),
+select,
+summary,
+label[for] {
+  cursor: pointer;
+}
+
+/* Text fields keep the text cursor, so it's clear you can type there. */
+input:not([type="button"], [type="submit"], [type="checkbox"], [type="radio"]),
+textarea,
+[contenteditable="true"] {
+  cursor: text;
+}
+
+button:disabled {
+  cursor: not-allowed;
 }
 
 #root {

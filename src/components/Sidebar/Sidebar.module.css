@@ -1,10 +1,11 @@
 .sidebar {
   --pad: 0.75rem;
+  /* Space between the floating sidebar and the window edges. */
+  --inset: 0.75rem;
 
   display: flex;
   flex-direction: column;
   width: var(--sidebar-width);
-  height: 100dvh;
   padding: 1.25rem var(--pad) var(--pad);
   background: var(--sidebar-bg);
   color: var(--sidebar-text);
@@ -13,7 +14,7 @@
 }
 
 .sidebar :focus-visible {
-  outline-color: var(--accent);
+  outline-color: var(--sidebar-accent);
 }
 
 .nav {
@@ -55,7 +56,7 @@
   background: var(--sidebar-hover);
 }
 
-/* The amber bar on the left edge marks the page you're on. */
+/* The accent bar on the left edge marks the page you're on. */
 .active::before {
   content: "";
   position: absolute;
@@ -64,7 +65,7 @@
   bottom: 0.375rem;
   width: 3px;
   border-radius: 0 3px 3px 0;
-  background: var(--accent);
+  background: var(--sidebar-accent);
 }
 
 .icon {
@@ -86,18 +87,17 @@
   padding: 0 0.75rem 0.5rem;
   font-size: 0.8125rem;
   font-weight: 500;
-  color: var(--sidebar-text);
-  opacity: 0.7;
+  color: var(--sidebar-text-muted);
 }
 
 .empty {
   padding: 0 0.75rem;
   font-size: 0.875rem;
-  opacity: 0.7;
+  color: var(--sidebar-text-muted);
 }
 
-.collapseButton,
-.closeMobile {
+/* Shared look of the round icon buttons: close, theme and collapse. */
+.iconButton {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -110,14 +110,17 @@
   cursor: pointer;
 }
 
-.collapseButton:hover,
-.closeMobile:hover {
+.iconButton:hover {
   background: var(--sidebar-hover);
   color: var(--sidebar-text-strong);
 }
 
-.collapseButton {
-  align-self: flex-end;
+/* Bottom row: theme toggle on the left, collapse arrow on the right. */
+.footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
   margin-top: 0.75rem;
 }
 
@@ -129,11 +132,17 @@
   display: none;
 }
 
-/* Desktop: sidebar stays in the page and can shrink to an icon rail. */
+/* Desktop: a floating panel that stays in view and can shrink to an icon rail. */
 @media (min-width: 768px) {
   .sidebar {
     position: sticky;
-    top: 0;
+    top: var(--inset);
+    align-self: start;
+    height: calc(100dvh - 2 * var(--inset));
+    margin: var(--inset) 0 var(--inset) var(--inset);
+    border: 1px solid var(--sidebar-border);
+    border-radius: 16px;
+    box-shadow: 0 6px 20px var(--sidebar-shadow);
     transition: width var(--speed);
   }
 
@@ -156,8 +165,9 @@
     clip: rect(0 0 0 0);
   }
 
-  .collapsed .collapseButton {
-    align-self: center;
+  /* In the narrow rail, the two buttons stack instead of sitting side by side. */
+  .collapsed .footer {
+    flex-direction: column;
   }
 
   .collapsed .collapseButton svg {

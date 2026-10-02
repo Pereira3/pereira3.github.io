@@ -39,7 +39,7 @@
   }
 
   .topBar :focus-visible {
-    outline-color: var(--accent);
+    outline-color: var(--sidebar-accent);
   }
 
   .menuButton {
@@ -60,6 +60,6 @@
     position: fixed;
     inset: 0;
     z-index: 15;
-    background: rgba(10, 12, 18, 0.5);
+    background: rgba(1, 31, 55, 0.55);
   }
 }

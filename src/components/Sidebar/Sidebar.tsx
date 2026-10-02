@@ -1,23 +1,11 @@
 import type { ReactNode } from "react";
 import { NavLink } from "react-router";
 import type { LucideIcon } from "lucide-react";
-import {
-  Archive,
-  ChevronsLeft,
-  FolderGit2,
-  GraduationCap,
-  UserRound,
-  X,
-} from "lucide-react";
+import { ChevronsLeft, FolderGit2, UserRound, X } from "lucide-react";
+import { categoryIcons } from "src/utils/categoryIcons";
 import { activeProjects, archiveCategoriesInUse } from "src/data/projects";
-import type { ArchiveCategoryId } from "src/data/projects";
+import { ThemeToggle } from "src/components/ThemeToggle/ThemeToggle";
 import styles from "src/components/Sidebar/Sidebar.module.css";
-
-// Icon shown for each archive category, also when the sidebar is collapsed.
-const categoryIcons: Record<ArchiveCategoryId, LucideIcon> = {
-  university: GraduationCap,
-  personal: Archive,
-};
 
 type SidebarProps = {
   collapsed: boolean;
@@ -104,7 +92,7 @@ export function Sidebar({
     <aside id="sidebar" className={classes}>
       <button
         type="button"
-        className={styles.closeMobile}
+        className={`${styles.iconButton} ${styles.closeMobile}`}
         onClick={onCloseMobile}
         aria-label="Close menu"
       >
@@ -158,17 +146,20 @@ export function Sidebar({
         </NavGroup>
       </nav>
 
-      <button
-        type="button"
-        className={styles.collapseButton}
-        onClick={onToggleCollapsed}
-        aria-controls="sidebar"
-        aria-expanded={!collapsed}
-        aria-label={collapsed ? "Expand sidebar" : "Collapse sidebar"}
-        title={collapsed ? "Expand sidebar" : "Collapse sidebar"}
-      >
-        <ChevronsLeft size={20} aria-hidden="true" />
-      </button>
+      <div className={styles.footer}>
+        <ThemeToggle className={styles.iconButton} />
+        <button
+          type="button"
+          className={`${styles.iconButton} ${styles.collapseButton}`}
+          onClick={onToggleCollapsed}
+          aria-controls="sidebar"
+          aria-expanded={!collapsed}
+          aria-label={collapsed ? "Expand sidebar" : "Collapse sidebar"}
+          title={collapsed ? "Expand sidebar" : "Collapse sidebar"}
+        >
+          <ChevronsLeft size={20} aria-hidden="true" />
+        </button>
+      </div>
     </aside>
   );
 }
