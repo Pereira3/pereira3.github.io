@@ -1,12 +1,13 @@
 import { Link } from "react-router";
 import type { LucideIcon } from "lucide-react";
-import { ArrowRight, FolderGit2 } from "lucide-react";
+import { AppWindow, ArrowRight, FolderGit2 } from "lucide-react";
 import { FaGithub } from "react-icons/fa6";
 import { profile } from "@/data/profile";
 import {
-	activeProjects,
 	archiveCategoriesInUse,
 	getArchivedProjects,
+	integratedProjects,
+	ongoingProjects,
 } from "@/data/projects";
 import { categoryIcons } from "@/data/categoryIcons";
 import { pageTitle } from "@/utils/pageTitle";
@@ -19,10 +20,16 @@ type Shortcut = {
 	icon: LucideIcon;
 };
 
-// One shortcut per active project and per archive category, built from projects.ts,
-// so this page stays up to date when projects are added or archived.
+// One shortcut per ongoing and integrated project and per archive category, built from
+// projects.ts, so this page stays up to date when projects are added or archived.
 const shortcuts: Shortcut[] = [
-	...activeProjects.map((project) => ({
+	...integratedProjects.map((project) => ({
+		to: `/projects/${project.id}`,
+		title: project.title,
+		summary: `Runs inside this site. ${project.description.split("\n")[0]}`,
+		icon: AppWindow,
+	})),
+	...ongoingProjects.map((project) => ({
 		to: `/projects/${project.id}`,
 		title: project.title,
 		summary: `In progress. ${project.description.split("\n")[0]}`,

@@ -1,9 +1,20 @@
+import { useId } from "react";
 import type { ReactNode } from "react";
 import { NavLink } from "react-router";
 import type { LucideIcon } from "lucide-react";
-import { ChevronsLeft, FolderGit2, UserRound, X } from "lucide-react";
+import {
+	AppWindow,
+	ChevronsLeft,
+	FolderGit2,
+	UserRound,
+	X,
+} from "lucide-react";
 import { categoryIcons } from "@/data/categoryIcons";
-import { activeProjects, archiveCategoriesInUse } from "@/data/projects";
+import {
+	archiveCategoriesInUse,
+	integratedProjects,
+	ongoingProjects,
+} from "@/data/projects";
 import { ThemeToggle } from "@/components/ThemeToggle/ThemeToggle";
 import styles from "@/components/Sidebar/Sidebar.module.css";
 
@@ -50,14 +61,14 @@ function NavItem({
 }
 
 type NavGroupProps = {
-	id: string;
 	title: string;
 	isEmpty: boolean;
 	children: ReactNode;
 };
 
 // A titled section of the sidebar, separated from the one above by a line.
-function NavGroup({ id, title, isEmpty, children }: NavGroupProps) {
+function NavGroup({ title, isEmpty, children }: NavGroupProps) {
+	const id = useId();
 	return (
 		<div className={styles.group}>
 			<h2 className={styles.groupTitle} id={id}>
@@ -112,11 +123,26 @@ export function Sidebar({
 				</ul>
 
 				<NavGroup
-					id="active-projects-title"
-					title="Active projects"
-					isEmpty={activeProjects.length === 0}
+					title="Integrated projects"
+					isEmpty={integratedProjects.length === 0}
 				>
-					{activeProjects.map((project) => (
+					{integratedProjects.map((project) => (
+						<NavItem
+							key={project.id}
+							to={`/projects/${project.id}`}
+							label={project.title}
+							icon={AppWindow}
+							collapsed={collapsed}
+							onNavigate={onCloseMobile}
+						/>
+					))}
+				</NavGroup>
+
+				<NavGroup
+					title="Ongoing projects"
+					isEmpty={ongoingProjects.length === 0}
+				>
+					{ongoingProjects.map((project) => (
 						<NavItem
 							key={project.id}
 							to={`/projects/${project.id}`}
@@ -129,7 +155,6 @@ export function Sidebar({
 				</NavGroup>
 
 				<NavGroup
-					id="archived-projects-title"
 					title="Archived projects"
 					isEmpty={archiveCategoriesInUse.length === 0}
 				>

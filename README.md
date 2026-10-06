@@ -24,7 +24,6 @@ npm run format    # format
 
 ## To implement
 
-- This website should be placed as active project.
 - Idea to add the push history to the page.
 
 ## Notes

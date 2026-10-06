@@ -1,7 +1,8 @@
-// One list for every project.
-// status "active"   -> gets its own entry in the sidebar under "Active projects"
-// status "university" -> appears on the University projects page
-// To archive a project, change its status. Nothing else needs to change.
+// One list for every project. The status decides where it appears in the sidebar:
+// "ongoing"    -> under "Ongoing projects": still being built, with its own page
+// "integrated" -> under "Integrated projects": runs inside this site, on its own page
+// "archived"   -> under "Archived projects", on the page of its category
+// To archive a project, change its status to "archived" and give it a category.
 
 export type ArchiveCategoryId = "university" | "personal";
 
@@ -37,7 +38,7 @@ export type ProjectDetails = {
 };
 
 type ProjectInfo = {
-	id: string; // used in the URL of active projects: #/projects/<id>
+	id: string; // used in the URL of ongoing and integrated projects: #/projects/<id>
 	title: string;
 	description: string;
 	repoUrl?: string;
@@ -46,17 +47,27 @@ type ProjectInfo = {
 	details?: ProjectDetails; // without it, the card has no "Show details" button
 };
 
-// An archived project must say which category it belongs to; an active one doesn't need one.
+// An archived project must say which category it belongs to; the others don't need one.
 export type Project =
-	| (ProjectInfo & { status: "active" })
+	| (ProjectInfo & { status: "ongoing" | "integrated" })
 	| (ProjectInfo & { status: "archived"; category: ArchiveCategoryId });
 
 export const projects: Project[] = [
 	{
+		id: "personal-website",
+		title: "Personal Website",
+		description:
+			"The site you're on now: a portfolio built with React and TypeScript, published on GitHub Pages.\nIt keeps growing with new pages and integrated projects.",
+		status: "ongoing",
+		repoUrl: "https://github.com/Pereira3/pereira3.github.io",
+		year: 2026,
+		tags: ["React", "TypeScript", "Vite", "GitHub Pages"],
+	},
+	{
 		id: "project_ms",
 		title: "MS",
 		description: "A project related with music will live inside this site.",
-		status: "active",
+		status: "ongoing",
 	},
 	{
 		id: "ep-management",
@@ -232,8 +243,11 @@ export const projects: Project[] = [
 	},
 ];
 
-export const activeProjects = projects.filter(
-	(project) => project.status === "active",
+export const ongoingProjects = projects.filter(
+	(project) => project.status === "ongoing",
+);
+export const integratedProjects = projects.filter(
+	(project) => project.status === "integrated",
 );
 
 export function getArchivedProjects(categoryId: ArchiveCategoryId) {

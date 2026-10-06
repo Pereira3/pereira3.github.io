@@ -13,3 +13,14 @@
 	border-radius: 50%;
 	background: var(--accent);
 }
+
+/* On its own line below the status, but only as wide as its content. */
+.repo {
+	display: flex;
+	width: fit-content;
+	align-items: center;
+	gap: 0.5rem;
+	margin-top: 1.5rem;
+	font-weight: 600;
+	text-decoration: none;
+}

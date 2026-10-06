@@ -8,9 +8,9 @@ import { lazyNamed } from "@/utils/lazyNamed";
 // These pages download only when someone opens them. While they download,
 // the Loading component shows in the right-hand panel (see Layout.tsx).
 // Introduction and NotFound load right away, since visitors land on them directly.
-const ActiveProjects = lazyNamed(
-	() => import("@/pages/ActiveProjects/ActiveProjects"),
-	"ActiveProjects",
+const ProjectPage = lazyNamed(
+	() => import("@/pages/ProjectPage/ProjectPage"),
+	"ProjectPage",
 );
 const ArchivedProjects = lazyNamed(
 	() => import("@/pages/ArchivedProjects/ArchivedProjects"),
@@ -28,7 +28,7 @@ export default function App() {
 					<Route index element={<Introduction />} />
 					<Route
 						path="projects/:projectId"
-						element={<ActiveProjects />}
+						element={<ProjectPage />}
 					/>
 					<Route
 						path="archived/:categoryId"
