@@ -1,6 +1,6 @@
 import { Link } from "react-router";
-import { profile } from "src/data/profile";
-import page from "src/styles/Page.module.css";
+import { profile } from "@/data/profile";
+import page from "@/styles/Page.module.css";
 
 export function NotFound() {
 	return (

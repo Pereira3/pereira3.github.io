@@ -2,15 +2,15 @@ import { Link } from "react-router";
 import type { LucideIcon } from "lucide-react";
 import { ArrowRight, FolderGit2 } from "lucide-react";
 import { FaGithub } from "react-icons/fa6";
-import { profile } from "src/data/profile";
+import { profile } from "@/data/profile";
 import {
 	activeProjects,
 	archiveCategoriesInUse,
 	getArchivedProjects,
-} from "src/data/projects";
-import { categoryIcons } from "src/utils/categoryIcons";
-import { pageTitle } from "src/utils/pageTitle";
-import styles from "src/pages/Introduction/Introduction.module.css";
+} from "@/data/projects";
+import { categoryIcons } from "@/data/categoryIcons";
+import { pageTitle } from "@/utils/pageTitle";
+import styles from "@/pages/Introduction/Introduction.module.css";
 
 type Shortcut = {
 	to: string;

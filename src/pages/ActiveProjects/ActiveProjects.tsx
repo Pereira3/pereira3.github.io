@@ -1,9 +1,9 @@
 import { useParams } from "react-router";
-import { activeProjects } from "src/data/projects";
-import { NotFound } from "src/pages/NotFound/NotFound";
-import { pageTitle } from "src/utils/pageTitle";
-import page from "src/styles/Page.module.css";
-import styles from "src/pages/ActiveProjects/ActiveProjects.module.css";
+import { activeProjects } from "@/data/projects";
+import { NotFound } from "@/pages/NotFound/NotFound";
+import { pageTitle } from "@/utils/pageTitle";
+import page from "@/styles/Page.module.css";
+import styles from "@/pages/ActiveProjects/ActiveProjects.module.css";
 
 // Placeholder for active projects. Each project will get its own component later.
 export function ActiveProjects() {

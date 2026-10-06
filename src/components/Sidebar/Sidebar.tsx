@@ -2,10 +2,10 @@ import type { ReactNode } from "react";
 import { NavLink } from "react-router";
 import type { LucideIcon } from "lucide-react";
 import { ChevronsLeft, FolderGit2, UserRound, X } from "lucide-react";
-import { categoryIcons } from "src/utils/categoryIcons";
-import { activeProjects, archiveCategoriesInUse } from "src/data/projects";
-import { ThemeToggle } from "src/components/ThemeToggle/ThemeToggle";
-import styles from "src/components/Sidebar/Sidebar.module.css";
+import { categoryIcons } from "@/data/categoryIcons";
+import { activeProjects, archiveCategoriesInUse } from "@/data/projects";
+import { ThemeToggle } from "@/components/ThemeToggle/ThemeToggle";
+import styles from "@/components/Sidebar/Sidebar.module.css";
 
 type SidebarProps = {
 	collapsed: boolean;

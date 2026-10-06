@@ -1,22 +1,20 @@
-import { lazy } from "react";
 import { Route, Routes } from "react-router";
-import { Layout } from "src/components/Layout/Layout";
-import { WelcomeScreen } from "src/components/WelcomeScreen/WelcomeScreen";
-import { Introduction } from "src/pages/Introduction/Introduction";
-import { NotFound } from "src/pages/NotFound/NotFound";
+import { Layout } from "@/components/Layout/Layout";
+import { WelcomeScreen } from "@/components/WelcomeScreen/WelcomeScreen";
+import { Introduction } from "@/pages/Introduction/Introduction";
+import { NotFound } from "@/pages/NotFound/NotFound";
+import { lazyNamed } from "@/utils/lazyNamed";
 
 // These pages download only when someone opens them. While they download,
 // the Loading component shows in the right-hand panel (see Layout.tsx).
 // Introduction and NotFound load right away, since visitors land on them directly.
-const ActiveProjects = lazy(() =>
-	import("src/pages/ActiveProjects/ActiveProjects").then((m) => ({
-		default: m.ActiveProjects,
-	})),
+const ActiveProjects = lazyNamed(
+	() => import("@/pages/ActiveProjects/ActiveProjects"),
+	"ActiveProjects",
 );
-const ArchivedProjects = lazy(() =>
-	import("src/pages/ArchivedProjects/ArchivedProjects").then((m) => ({
-		default: m.ArchivedProjects,
-	})),
+const ArchivedProjects = lazyNamed(
+	() => import("@/pages/ArchivedProjects/ArchivedProjects"),
+	"ArchivedProjects",
 );
 
 // WelcomeScreen plays the welcome over the site when a visitor arrives.

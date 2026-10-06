@@ -1,10 +1,10 @@
 import { useParams } from "react-router";
-import { archiveCategories, getArchivedProjects } from "src/data/projects";
-import { ProjectCard } from "src/components/ProjectCard/ProjectCard";
-import { NotFound } from "src/pages/NotFound/NotFound";
-import { pageTitle } from "src/utils/pageTitle";
-import page from "src/styles/Page.module.css";
-import styles from "src/pages/ArchivedProjects/ArchivedProjects.module.css";
+import { archiveCategories, getArchivedProjects } from "@/data/projects";
+import { ProjectCard } from "@/components/ProjectCard/ProjectCard";
+import { NotFound } from "@/pages/NotFound/NotFound";
+import { pageTitle } from "@/utils/pageTitle";
+import page from "@/styles/Page.module.css";
+import styles from "@/pages/ArchivedProjects/ArchivedProjects.module.css";
 
 // One page for every archive category: #/archived/university, #/archived/personal, ...
 export function ArchivedProjects() {

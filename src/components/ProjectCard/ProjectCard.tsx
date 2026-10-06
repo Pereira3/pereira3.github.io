@@ -1,9 +1,9 @@
 import { useId, useState } from "react";
 import { ChevronDown, ExternalLink } from "lucide-react";
 import { FaGithub } from "react-icons/fa6";
-import type { Project } from "src/data/projects";
-import page from "src/styles/Page.module.css";
-import styles from "src/components/ProjectCard/ProjectCard.module.css";
+import type { Project } from "@/data/projects";
+import page from "@/styles/Page.module.css";
+import styles from "@/components/ProjectCard/ProjectCard.module.css";
 
 type ProjectCardProps = {
 	project: Project;

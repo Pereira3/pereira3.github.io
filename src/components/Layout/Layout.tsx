@@ -1,9 +1,9 @@
 import { Suspense, useEffect, useState } from "react";
 import { Outlet, useLocation } from "react-router";
 import { Menu } from "lucide-react";
-import { Sidebar } from "src/components/Sidebar/Sidebar";
-import { Loading } from "src/components/Loading/Loading";
-import styles from "src/components/Layout/Layout.module.css";
+import { Sidebar } from "@/components/Sidebar/Sidebar";
+import { Loading } from "@/components/Loading/Loading";
+import styles from "@/components/Layout/Layout.module.css";
 
 const COLLAPSED_KEY = "sidebar-collapsed";
 

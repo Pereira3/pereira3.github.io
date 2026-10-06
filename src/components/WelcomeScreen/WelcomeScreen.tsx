@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import type { AnimationEvent, ReactNode } from "react";
-import styles from "src/components/WelcomeScreen/WelcomeScreen.module.css";
+import styles from "@/components/WelcomeScreen/WelcomeScreen.module.css";
 
 // A little longer than the whole animation (3.8s, see the timeline in WelcomeScreen.module.css),
 // so it only matters when the fade-out never reports that it ended.
