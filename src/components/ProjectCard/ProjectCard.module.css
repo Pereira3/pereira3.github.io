@@ -1,35 +1,35 @@
 .card {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-  padding: 1.5rem;
-  border: 1px solid var(--card-border);
-  border-radius: 16px;
-  background: var(--surface);
-  box-shadow: 0 6px 20px var(--card-shadow);
-  transition:
-    transform 260ms cubic-bezier(0.2, 0.8, 0.2, 1),
-    box-shadow 260ms cubic-bezier(0.2, 0.8, 0.2, 1),
-    border-color 260ms ease;
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	height: 100%;
+	padding: 1.5rem;
+	border: 1px solid var(--card-border);
+	border-radius: 16px;
+	background: var(--surface);
+	box-shadow: 0 6px 20px var(--card-shadow);
+	transition:
+		transform 260ms cubic-bezier(0.2, 0.8, 0.2, 1),
+		box-shadow 260ms cubic-bezier(0.2, 0.8, 0.2, 1),
+		border-color 260ms ease;
 }
 
 /* A gradient outline around the whole card, faded in on hover. */
 .card::before {
-  content: "";
-  position: absolute;
-  inset: -1px; /* sits exactly over the card's own border */
-  padding: 2px; /* thickness of the outline */
-  border-radius: 17px;
-  background: linear-gradient(135deg, var(--accent), var(--accent-soft));
-  /* Shows the gradient only in the padding area, so it draws a ring, not a filled box. */
-  mask:
-    linear-gradient(#000 0 0) content-box,
-    linear-gradient(#000 0 0);
-  mask-composite: exclude;
-  opacity: 0;
-  transition: opacity 260ms ease;
-  pointer-events: none;
+	content: "";
+	position: absolute;
+	inset: -1px; /* sits exactly over the card's own border */
+	padding: 2px; /* thickness of the outline */
+	border-radius: 17px;
+	background: linear-gradient(135deg, var(--accent), var(--accent-soft));
+	/* Shows the gradient only in the padding area, so it draws a ring, not a filled box. */
+	mask:
+		linear-gradient(#000 0 0) content-box,
+		linear-gradient(#000 0 0);
+	mask-composite: exclude;
+	opacity: 0;
+	transition: opacity 260ms ease;
+	pointer-events: none;
 }
 
 /*
@@ -38,249 +38,250 @@
   Keyboard users get the same effect while they're tabbing through the card's buttons.
 */
 @media (hover: hover) {
-  .card:hover {
-    transform: translateY(-4px) scale(1.01);
-    box-shadow: 0 18px 40px var(--card-shadow-hover);
-  }
+	.card:hover {
+		transform: translateY(-4px) scale(1.01);
+		box-shadow: 0 18px 40px var(--card-shadow-hover);
+	}
 
-  .card:hover::before {
-    opacity: 1;
-  }
+	.card:hover::before {
+		opacity: 1;
+	}
 
-  .card:hover .tag,
-  .card:hover .detailsButton {
-    border-color: var(--accent);
-  }
+	.card:hover .tag,
+	.card:hover .detailsButton {
+		border-color: var(--accent);
+	}
 
-  .card:hover .title {
-    transform: scale(1.04);
-    background-size: 100% 2px;
-  }
+	.card:hover .title {
+		transform: scale(1.04);
+		background-size: 100% 2px;
+	}
 }
 
 .card:has(:focus-visible) {
-  transform: translateY(-4px) scale(1.01);
-  box-shadow: 0 18px 40px var(--card-shadow-hover);
+	transform: translateY(-4px) scale(1.01);
+	box-shadow: 0 18px 40px var(--card-shadow-hover);
 }
 
 .card:has(:focus-visible)::before {
-  opacity: 1;
+	opacity: 1;
 }
 
 .card:has(:focus-visible) .tag,
 .card:has(:focus-visible) .detailsButton {
-  border-color: var(--accent);
+	border-color: var(--accent);
 }
 
 .card:has(:focus-visible) .title {
-  transform: scale(1.04);
-  background-size: 100% 2px;
+	transform: scale(1.04);
+	background-size: 100% 2px;
 }
 
 /* Visitors who reduce motion keep the shadow and outline, without the movement. */
 @media (prefers-reduced-motion: reduce) {
-  .card:hover,
-  .card:has(:focus-visible),
-  .card:hover .title,
-  .card:has(:focus-visible) .title {
-    transform: none;
-  }
+	.card:hover,
+	.card:has(:focus-visible),
+	.card:hover .title,
+	.card:has(:focus-visible) .title {
+		transform: none;
+	}
 }
 
 .heading {
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: 1rem;
+	display: flex;
+	align-items: baseline;
+	justify-content: space-between;
+	gap: 1rem;
 }
 
 .title {
-  font-size: 1.25rem;
-  font-weight: 650;
-  letter-spacing: -0.01em;
-  /* The underline is a thin background line that grows from 0% to 100% of the title's width. */
-  padding-bottom: 2px;
-  background: linear-gradient(var(--accent), var(--accent)) left bottom / 0% 2px no-repeat;
-  transform-origin: left center;
-  transition:
-    transform 260ms cubic-bezier(0.2, 0.8, 0.2, 1),
-    background-size 400ms cubic-bezier(0.2, 0.8, 0.2, 1);
+	font-size: 1.25rem;
+	font-weight: 650;
+	letter-spacing: -0.01em;
+	/* The underline is a thin background line that grows from 0% to 100% of the title's width. */
+	padding-bottom: 2px;
+	background: linear-gradient(var(--accent), var(--accent)) left bottom / 0%
+		2px no-repeat;
+	transform-origin: left center;
+	transition:
+		transform 260ms cubic-bezier(0.2, 0.8, 0.2, 1),
+		background-size 400ms cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 
 .year {
-  flex-shrink: 0;
-  font-size: 0.9375rem;
-  color: var(--text-muted);
-  font-variant-numeric: tabular-nums;
+	flex-shrink: 0;
+	font-size: 0.9375rem;
+	color: var(--text-muted);
+	font-variant-numeric: tabular-nums;
 }
 
 .description {
-  margin-top: 0.625rem;
-  white-space: pre-line; /* shows \n in the text as a line break */
+	margin-top: 0.625rem;
+	white-space: pre-line; /* shows \n in the text as a line break */
 }
 
 /* Bottom row: tags on the left, GitHub and details buttons on the right. */
 .footer {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-between;
-  gap: 0.75rem 1rem;
-  margin-top: auto;
-  padding-top: 1.25rem;
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	justify-content: space-between;
+	gap: 0.75rem 1rem;
+	margin-top: auto;
+	padding-top: 1.25rem;
 }
 
 .tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.375rem;
-  margin: 0;
-  padding: 0;
-  list-style: none;
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.375rem;
+	margin: 0;
+	padding: 0;
+	list-style: none;
 }
 
 .tag {
-  padding: 0.125rem 0.625rem;
-  border: 1px solid var(--rule);
-  border-radius: 999px;
-  font-size: 0.8125rem;
-  color: var(--text-muted);
-  /* The tags light up a moment after the card, so the highlight spreads inward. */
-  transition: border-color 260ms ease 80ms;
+	padding: 0.125rem 0.625rem;
+	border: 1px solid var(--rule);
+	border-radius: 999px;
+	font-size: 0.8125rem;
+	color: var(--text-muted);
+	/* The tags light up a moment after the card, so the highlight spreads inward. */
+	transition: border-color 260ms ease 80ms;
 }
 
 .actions {
-  display: flex;
-  align-items: center;
-  gap: 0.375rem;
-  margin-left: auto;
+	display: flex;
+	align-items: center;
+	gap: 0.375rem;
+	margin-left: auto;
 }
 
 .iconLink,
 .detailsButton {
-  position: relative;
-  gap: 0.375rem;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  height: 2.375rem;
-  border-radius: 8px;
-  color: var(--text);
-  transition: background-color var(--speed);
+	position: relative;
+	gap: 0.375rem;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	height: 2.375rem;
+	border-radius: 8px;
+	color: var(--text);
+	transition: background-color var(--speed);
 }
 
 .iconLink {
-  width: 2.375rem;
+	width: 2.375rem;
 }
 
 .detailsButton {
-  gap: 0.375rem;
-  padding: 0 0.875rem;
-  border: 1px solid var(--rule);
-  background: transparent;
-  font: inherit;
-  font-size: 0.9375rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition:
-    background-color var(--speed),
-    border-color 260ms ease 80ms;
+	gap: 0.375rem;
+	padding: 0 0.875rem;
+	border: 1px solid var(--rule);
+	background: transparent;
+	font: inherit;
+	font-size: 0.9375rem;
+	font-weight: 600;
+	cursor: pointer;
+	transition:
+		background-color var(--speed),
+		border-color 260ms ease 80ms;
 }
 
 .iconLink:hover,
 .detailsButton:hover {
-  background: var(--surface-hover);
+	background: var(--surface-hover);
 }
 
 .chevron {
-  transition: transform var(--speed);
+	transition: transform var(--speed);
 }
 
 .detailsButton[aria-expanded="true"] .chevron {
-  transform: rotate(180deg);
+	transform: rotate(180deg);
 }
 
 /* Details panel: the row height animates from 0 to the content's full height. */
 .panel {
-  display: grid;
-  grid-template-rows: 0fr;
-  transition: grid-template-rows calc(var(--speed) * 1.5) ease;
+	display: grid;
+	grid-template-rows: 0fr;
+	transition: grid-template-rows calc(var(--speed) * 1.5) ease;
 }
 
 .panelOpen {
-  grid-template-rows: 1fr;
+	grid-template-rows: 1fr;
 }
 
 .panelClip {
-  min-height: 0;
-  overflow: hidden;
+	min-height: 0;
+	overflow: hidden;
 }
 
 .panelContent {
-  display: grid;
-  gap: 1.75rem;
-  margin-top: 1.25rem;
-  padding-top: 1.5rem;
-  border-top: 1px solid var(--rule);
+	display: grid;
+	gap: 1.75rem;
+	margin-top: 1.25rem;
+	padding-top: 1.5rem;
+	border-top: 1px solid var(--rule);
 }
 
 .about {
-  white-space: pre-line; /* shows \n in the text as a line break */
+	white-space: pre-line; /* shows \n in the text as a line break */
 }
 
 .sectionTitle {
-  margin-bottom: 0.625rem;
-  font-size: 0.9375rem;
-  font-weight: 600;
-  color: var(--text-muted);
+	margin-bottom: 0.625rem;
+	font-size: 0.9375rem;
+	font-weight: 600;
+	color: var(--text-muted);
 }
 
 .columns {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(18rem, 100%), 1fr));
-  gap: 1.75rem 2.5rem;
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(min(18rem, 100%), 1fr));
+	gap: 1.75rem 2.5rem;
 }
 
 .highlights {
-  display: grid;
-  gap: 0.375rem;
-  margin: 0;
-  padding-left: 1.125rem;
+	display: grid;
+	gap: 0.375rem;
+	margin: 0;
+	padding-left: 1.125rem;
 }
 
 .facts {
-  display: grid;
-  gap: 0.5rem;
-  margin: 0;
+	display: grid;
+	gap: 0.5rem;
+	margin: 0;
 }
 
 .facts div {
-  display: grid;
-  grid-template-columns: 7rem 1fr;
-  gap: 1rem;
+	display: grid;
+	grid-template-columns: 7rem 1fr;
+	gap: 1rem;
 }
 
 .facts dt {
-  color: var(--text-muted);
+	color: var(--text-muted);
 }
 
 .facts dd {
-  margin: 0;
+	margin: 0;
 }
 
 .links {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem 1.5rem;
-  margin: 0;
-  padding: 0;
-  list-style: none;
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.5rem 1.5rem;
+	margin: 0;
+	padding: 0;
+	list-style: none;
 }
 
 .link {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.375rem;
-  font-weight: 600;
-  text-decoration: none;
+	display: inline-flex;
+	align-items: center;
+	gap: 0.375rem;
+	font-weight: 600;
+	text-decoration: none;
 }

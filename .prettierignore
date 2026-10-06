@@ -1,0 +1,2 @@
+# Generated files; Prettier already skips what .gitignore lists (dist, node_modules).
+package-lock.json

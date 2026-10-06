@@ -1,0 +1,6 @@
+# Store and check out text files with LF line endings on every OS,
+# so Windows checkouts match Prettier and git stops warning about CRLF.
+* text=auto eol=lf
+
+*.png binary
+*.woff2 binary

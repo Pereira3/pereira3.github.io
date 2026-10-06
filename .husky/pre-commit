@@ -1,0 +1,2 @@
+# Formats the staged files and lints the staged code; a lint error stops the commit.
+npx lint-staged

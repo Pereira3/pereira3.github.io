@@ -1,0 +1,19 @@
+# Basic editor settings, matching .prettierrc.json.
+root = true
+
+[*]
+charset = utf-8
+end_of_line = lf
+indent_style = tab
+indent_size = 4
+tab_width = 4
+insert_final_newline = true
+trim_trailing_whitespace = true
+
+# YAML doesn't allow tabs, and tabs can change how Markdown renders.
+[*.{yml,yaml,md}]
+indent_style = space
+indent_size = 2
+
+[*.md]
+trim_trailing_whitespace = false

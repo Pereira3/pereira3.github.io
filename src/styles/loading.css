@@ -4,19 +4,19 @@
 */
 
 .loading {
-  display: flex;
-  align-items: center;
-  font-size: 1.1875rem;
-  color: var(--text-muted);
-  opacity: 0;
-  /* Wait 300ms before appearing; most pages load faster than that. */
-  animation: loading-appear 1ms linear 300ms forwards;
+	display: flex;
+	align-items: center;
+	font-size: 1.1875rem;
+	color: var(--text-muted);
+	opacity: 0;
+	/* Wait 300ms before appearing; most pages load faster than that. */
+	animation: loading-appear 1ms linear 300ms forwards;
 }
 
 /* Variant used in index.html: centered on the whole screen. */
 .loading--fullscreen {
-  justify-content: center;
-  min-height: 100dvh;
+	justify-content: center;
+	min-height: 100dvh;
 }
 
 /*
@@ -24,44 +24,44 @@
   Then it holds, fades out, and writes itself again for as long as the page is loading.
 */
 .loading-text {
-  /* The mask only covers the text's own box, so it needs room below for letters like g. */
-  line-height: 1.5;
-  mask-image: linear-gradient(to right, #000 45%, transparent 55%);
-  mask-size: 300% 100%;
-  mask-repeat: no-repeat;
-  animation: loading-write 3600ms ease-in-out 300ms infinite both;
+	/* The mask only covers the text's own box, so it needs room below for letters like g. */
+	line-height: 1.5;
+	mask-image: linear-gradient(to right, #000 45%, transparent 55%);
+	mask-size: 300% 100%;
+	mask-repeat: no-repeat;
+	animation: loading-write 3600ms ease-in-out 300ms infinite both;
 }
 
 @keyframes loading-appear {
-  to {
-    opacity: 1;
-  }
+	to {
+		opacity: 1;
+	}
 }
 
 @keyframes loading-write {
-  /* Write (0–1.5s) */
-  0% {
-    mask-position: 100% 0;
-    opacity: 1;
-  }
-  42% {
-    mask-position: 0 0;
-  }
-  /* Hold (1.5–3s), then fade out (3–3.4s) */
-  83% {
-    opacity: 1;
-  }
-  94%,
-  100% {
-    mask-position: 0 0;
-    opacity: 0;
-  }
+	/* Write (0–1.5s) */
+	0% {
+		mask-position: 100% 0;
+		opacity: 1;
+	}
+	42% {
+		mask-position: 0 0;
+	}
+	/* Hold (1.5–3s), then fade out (3–3.4s) */
+	83% {
+		opacity: 1;
+	}
+	94%,
+	100% {
+		mask-position: 0 0;
+		opacity: 0;
+	}
 }
 
 /* For visitors who reduce motion: the text appears at once, without moving. */
 @media (prefers-reduced-motion: reduce) {
-  .loading-text {
-    animation: none;
-    mask-image: none;
-  }
+	.loading-text {
+		animation: none;
+		mask-image: none;
+	}
 }

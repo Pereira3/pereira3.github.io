@@ -4,6 +4,6 @@ import type { ArchiveCategoryId } from "src/data/projects";
 
 // Icon shown for each archive category, in the sidebar and on the Introduction page.
 export const categoryIcons: Record<ArchiveCategoryId, LucideIcon> = {
-  university: GraduationCap,
-  personal: Archive,
+	university: GraduationCap,
+	personal: Archive,
 };

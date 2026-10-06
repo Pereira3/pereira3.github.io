@@ -1,0 +1,3 @@
+# Lints and type-checks the whole project, so nothing broken reaches GitHub.
+npm run lint
+npm run typecheck

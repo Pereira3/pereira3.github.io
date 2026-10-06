@@ -1,8 +1,15 @@
 {
-  "$schema": "./node_modules/oxlint/configuration_schema.json",
-  "plugins": ["react", "typescript", "oxc"],
-  "rules": {
-    "react/rules-of-hooks": "error",
-    "react/only-export-components": ["warn", { "allowConstantExport": true }]
-  }
+	"$schema": "./node_modules/oxlint/configuration_schema.json",
+	"plugins": ["react", "typescript", "oxc", "jsx-a11y"],
+	"rules": {
+		"react/rules-of-hooks": "error",
+		"react/exhaustive-deps": "error",
+		"react/only-export-components": [
+			"warn",
+			{ "allowConstantExport": true }
+		],
+		// Off: <svg role="img"> is the right pattern for inline SVG, <output> isn't meant
+		// for loading messages, and the robot check is a deliberate custom checkbox.
+		"jsx-a11y/prefer-tag-over-role": "off"
+	}
 }
