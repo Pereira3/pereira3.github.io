@@ -1,0 +1,49 @@
+.instruction {
+	font-size: 1.125rem;
+	font-weight: 650;
+}
+
+.area {
+	position: relative;
+	display: grid;
+	place-items: center;
+	width: 100%;
+	aspect-ratio: 16 / 10;
+	border: 1px solid var(--rule);
+	border-radius: 10px;
+	background: var(--page-bg);
+	overflow: hidden;
+}
+
+/*
+  Centered on its position, and shrinks to nothing over the time it can be hit
+  (animation-duration is set per circle). The shrinking is the game itself, so it
+  stays on for visitors who reduce motion.
+*/
+.circle {
+	position: absolute;
+	width: 3.75rem;
+	aspect-ratio: 1;
+	padding: 0;
+	border: 3px solid #ffffff;
+	border-radius: 50%;
+	background: var(--accent);
+	box-shadow: 0 0 0 3px var(--accent);
+	translate: -50% -50%;
+	animation: shrink linear forwards;
+}
+
+@keyframes shrink {
+	from {
+		scale: 1;
+	}
+	to {
+		scale: 0;
+	}
+}
+
+.count {
+	font-size: 0.875rem;
+	font-weight: 600;
+	color: var(--text-muted);
+}

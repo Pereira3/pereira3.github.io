@@ -1,6 +1,7 @@
 // One list for every project. The status decides where it appears in the sidebar:
 // "ongoing"    -> under "Ongoing projects": still being built, with its own page
 // "integrated" -> under "Integrated projects": runs inside this site, on its own page
+//                 (connect it to its component in src/projects/registry.ts)
 // "archived"   -> under "Archived projects", on the page of its category
 // To archive a project, change its status to "archived" and give it a category.
 
@@ -40,19 +41,34 @@ export type ProjectDetails = {
 type ProjectInfo = {
 	id: string; // used in the URL of ongoing and integrated projects: #/projects/<id>
 	title: string;
-	description: string;
+	description?: string;
 	repoUrl?: string;
 	year?: number;
 	tags?: string[];
+	// true shows an "AI assisted" label on the project's page, its card and its
+	// Introduction shortcut (not in the sidebar)
+	aiAssisted?: boolean;
 	details?: ProjectDetails; // without it, the card has no "Show details" button
 };
 
-// An archived project must say which category it belongs to; the others don't need one.
+// Ids of the projects that run inside this site. Add the id here when a project becomes
+// "integrated"; TypeScript then asks for its component in src/projects/registry.ts.
+export type IntegratedProjectId = "are-you-human";
+
+// An archived project must say which category it belongs to, and an integrated one
+// must use an id from IntegratedProjectId; ongoing projects need neither.
 export type Project =
-	| (ProjectInfo & { status: "ongoing" | "integrated" })
+	| (ProjectInfo & { status: "ongoing" })
+	| (ProjectInfo & { status: "integrated"; id: IntegratedProjectId })
 	| (ProjectInfo & { status: "archived"; category: ArchiveCategoryId });
 
 export const projects: Project[] = [
+	{
+		id: "are-you-human",
+		title: "Are You Human?",
+		status: "integrated",
+		aiAssisted: true,
+	},
 	{
 		id: "personal-website",
 		title: "Personal Website",
@@ -62,11 +78,11 @@ export const projects: Project[] = [
 		repoUrl: "https://github.com/Pereira3/pereira3.github.io",
 		year: 2026,
 		tags: ["React", "TypeScript", "Vite", "GitHub Pages"],
+		aiAssisted: true,
 	},
 	{
 		id: "project_ms",
 		title: "MS",
-		description: "A project related with music will live inside this site.",
 		status: "ongoing",
 	},
 	{

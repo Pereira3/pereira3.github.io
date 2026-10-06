@@ -19,6 +19,7 @@ import { ThemeToggle } from "@/components/ThemeToggle/ThemeToggle";
 import styles from "@/components/Sidebar/Sidebar.module.css";
 
 type SidebarProps = {
+	locked: boolean; // while true, nothing in the sidebar can be used
 	collapsed: boolean;
 	onToggleCollapsed: () => void;
 	mobileOpen: boolean;
@@ -88,6 +89,7 @@ function NavGroup({ title, isEmpty, children }: NavGroupProps) {
 }
 
 export function Sidebar({
+	locked,
 	collapsed,
 	onToggleCollapsed,
 	mobileOpen,
@@ -97,12 +99,13 @@ export function Sidebar({
 		styles.sidebar,
 		collapsed && styles.collapsed,
 		mobileOpen && styles.mobileOpen,
+		locked && styles.locked,
 	]
 		.filter(Boolean)
 		.join(" ");
 
 	return (
-		<aside id="sidebar" className={classes}>
+		<aside id="sidebar" className={classes} inert={locked}>
 			<button
 				type="button"
 				className={`${styles.iconButton} ${styles.closeMobile}`}

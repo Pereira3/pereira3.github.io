@@ -2,6 +2,7 @@ import { useId, useState } from "react";
 import { ChevronDown, ExternalLink } from "lucide-react";
 import { FaGithub } from "react-icons/fa6";
 import type { Project } from "@/data/projects";
+import { AiBadge } from "@/components/AiBadge/AiBadge";
 import page from "@/styles/Page.module.css";
 import styles from "@/components/ProjectCard/ProjectCard.module.css";
 
@@ -34,7 +35,15 @@ export function ProjectCard({
 				)}
 			</div>
 
-			<p className={styles.description}>{project.description}</p>
+			{project.aiAssisted && (
+				<p className={styles.labels}>
+					<AiBadge />
+				</p>
+			)}
+
+			{project.description && (
+				<p className={styles.description}>{project.description}</p>
+			)}
 
 			<div className={styles.footer}>
 				{project.tags && project.tags.length > 0 && (

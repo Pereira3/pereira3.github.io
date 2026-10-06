@@ -1,0 +1,76 @@
+/* Same dark backdrop as the welcome screen, in both themes. */
+.screen {
+	display: grid;
+	place-content: center;
+	justify-items: center;
+	gap: 1rem;
+	min-height: 100dvh;
+	padding: 2rem;
+	background: radial-gradient(circle at 50% 40%, #013a63, #011f37 70%);
+	color: #ffffff;
+	text-align: center;
+	animation: block-in 500ms ease both;
+}
+
+@keyframes block-in {
+	from {
+		opacity: 0;
+		transform: scale(0.98);
+	}
+}
+
+.icon {
+	color: #a9d6e5;
+}
+
+.title {
+	font-size: clamp(2rem, 6vw, 3.25rem);
+	font-weight: 750;
+	letter-spacing: -0.03em;
+}
+
+.title:focus {
+	outline: none;
+}
+
+.message {
+	max-width: 30rem;
+	font-size: 1.125rem;
+	color: #a9d6e5;
+}
+
+.button {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.5rem;
+	margin-top: 1.25rem;
+	padding: 0.875rem 1.75rem;
+	border: 0;
+	border-radius: 999px;
+	background: #ffffff;
+	color: #0d47a1;
+	font: inherit;
+	font-weight: 650;
+	transition:
+		transform 200ms ease,
+		box-shadow 200ms ease;
+}
+
+.button:hover {
+	transform: translateY(-2px);
+	box-shadow: 0 10px 28px rgba(0, 0, 0, 0.35);
+}
+
+.button:focus-visible {
+	outline-color: #ffffff;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.screen {
+		animation: none;
+	}
+
+	.button:hover {
+		transform: none;
+	}
+}

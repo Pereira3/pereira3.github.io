@@ -1,0 +1,89 @@
+.instruction {
+	font-size: 1.125rem;
+	font-weight: 650;
+}
+
+/* Holds the picture and the refresh button in its corner. */
+.frame {
+	position: relative;
+	width: 100%;
+}
+
+.picture {
+	display: block;
+	width: 100%;
+	height: auto;
+	border: 1px solid var(--rule);
+	border-radius: 10px;
+	background: repeating-linear-gradient(
+		-35deg,
+		var(--page-bg) 0 6px,
+		var(--surface) 6px 12px
+	);
+}
+
+/* Faint on purpose: it should be readable, but only just. */
+.letter {
+	fill: var(--text-muted);
+	opacity: 0.7;
+	font-family: var(--font);
+	font-weight: 700;
+	text-anchor: middle;
+	user-select: none;
+}
+
+.strike {
+	fill: none;
+	stroke: var(--text-muted);
+	stroke-width: 2.5;
+	opacity: 0.75;
+}
+
+.refresh {
+	position: absolute;
+	top: 0.5rem;
+	right: 0.5rem;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 2.25rem;
+	height: 2.25rem;
+	border: 1px solid var(--rule);
+	border-radius: 50%;
+	background: var(--surface);
+	color: var(--text);
+	transition:
+		transform var(--speed),
+		border-color var(--speed);
+}
+
+.refresh:hover {
+	border-color: var(--accent);
+	transform: rotate(90deg);
+}
+
+.form {
+	display: flex;
+	gap: 0.5rem;
+	width: 100%;
+}
+
+.input {
+	flex: 1;
+	min-width: 0;
+	padding: 0.75rem 1rem;
+	border: 1px solid var(--rule);
+	border-radius: 10px;
+	background: var(--page-bg);
+	color: var(--text);
+	font: inherit;
+	font-size: 1.125rem;
+	font-weight: 600;
+	letter-spacing: 0.2em;
+	text-transform: uppercase;
+}
+
+.input:focus-visible {
+	outline: 2px solid var(--accent);
+	outline-offset: 1px;
+}

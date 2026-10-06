@@ -1,0 +1,129 @@
+.instruction {
+	font-size: 1.125rem;
+	font-weight: 650;
+}
+
+/* Two lanes of road, with a checkered finish line on the right. */
+.track {
+	--car: 2.5rem;
+	--finish: 0.75rem;
+
+	display: grid;
+	gap: 0.375rem;
+	width: 100%;
+	padding: 0.5rem;
+	padding-right: calc(0.5rem + var(--finish));
+	border-radius: 10px;
+	background:
+		repeating-conic-gradient(#ffffff 0 25%, #1b1b1b 0 50%) right /
+			var(--finish) var(--finish),
+		#2d3640;
+	background-repeat: repeat-y, no-repeat;
+}
+
+/* Each lane: its name on the left, then the road the car drives along. */
+.lane {
+	display: grid;
+	grid-template-columns: 2.5rem 1fr;
+	align-items: center;
+	height: 2.75rem;
+	border-bottom: 2px dashed rgba(255, 255, 255, 0.35);
+}
+
+.lane:last-child {
+	border-bottom: 0;
+}
+
+.name {
+	font-size: 0.75rem;
+	font-weight: 700;
+	color: rgba(255, 255, 255, 0.6);
+	text-transform: uppercase;
+}
+
+.road {
+	position: relative;
+	height: 100%;
+}
+
+/*
+  left goes from 0 (start) to --end (finish), where the car's front half is past the
+  end of the road, across the checkered line.
+*/
+.road {
+	--end: calc(100% - var(--car) / 2);
+}
+
+.car {
+	position: absolute;
+	top: 50%;
+	left: 0;
+	display: grid;
+	place-items: center;
+	width: var(--car);
+	translate: 0 -50%;
+}
+
+.player {
+	left: calc(var(--progress) * var(--end));
+	color: var(--accent-soft);
+	transition: left 120ms linear;
+}
+
+.bot {
+	color: #ff8a8a;
+}
+
+/* Drives at a steady speed; animation-duration is the bot's race time. */
+.driving {
+	animation: drive linear forwards;
+}
+
+@keyframes drive {
+	to {
+		left: var(--end);
+	}
+}
+
+/* The phrase to type, with the part already typed correctly highlighted. */
+.phrase {
+	width: 100%;
+	padding: 0.625rem 0.875rem;
+	border-radius: 8px;
+	background: var(--page-bg);
+	font-size: 1.125rem;
+	font-weight: 600;
+	text-align: left;
+	user-select: none;
+}
+
+.typed {
+	color: var(--accent);
+	text-decoration: underline;
+	text-decoration-thickness: 2px;
+	text-underline-offset: 4px;
+}
+
+.input {
+	width: 100%;
+	padding: 0.75rem 1rem;
+	border: 1px solid var(--rule);
+	border-radius: 10px;
+	background: var(--page-bg);
+	color: var(--text);
+	font: inherit;
+	font-size: 1.125rem;
+	font-weight: 600;
+}
+
+.input:focus-visible {
+	outline: 2px solid var(--accent);
+	outline-offset: 1px;
+}
+
+/* A typo: no fuel until it's fixed. */
+.wrong,
+.wrong:focus-visible {
+	border-color: #e5484d;
+	outline-color: #e5484d;
+}

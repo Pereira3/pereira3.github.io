@@ -12,6 +12,6 @@ export const profile: Profile = {
 	// <title>, shown before React starts, so change both together.
 	websiteName: "RP",
 	role: "Software Engineer",
-	intro: "This site is where I collect the things I build, from current experiments to finished work.\nOngoing projects are what I'm working on right now, and each one has its own page.\nArchived projects holds finished work, including my university projects, each with a short description and a link to its code on GitHub.",
+	intro: "This site is where I collect the things I build, from current experiments to finished work.\nIntegrated projects run right here, inside this site.\nOngoing projects are what I'm working on right now, and each one has its own page.\nArchived projects holds finished work, including my university projects, each with a short description and a link to its code on GitHub.",
 	githubUrl: "https://github.com/Pereira3",
 };

@@ -1,3 +1,8 @@
+/* Labels such as "AI assisted", on their own line under the title. */
+.labels {
+	margin-top: 0.875rem;
+}
+
 .status {
 	display: inline-flex;
 	align-items: center;

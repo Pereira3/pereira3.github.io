@@ -4,6 +4,7 @@ import { Menu } from "lucide-react";
 import { Sidebar } from "@/components/Sidebar/Sidebar";
 import { Loading } from "@/components/Loading/Loading";
 import styles from "@/components/Layout/Layout.module.css";
+import { useSiteAccess } from "@/hooks/useSiteAccess";
 
 const COLLAPSED_KEY = "sidebar-collapsed";
 
@@ -20,6 +21,14 @@ export function Layout() {
 	const [collapsed, setCollapsed] = useState(readCollapsed);
 	const [mobileOpen, setMobileOpen] = useState(false);
 	const { pathname } = useLocation();
+	const { lockedPath, blockAccess } = useSiteAccess();
+	const locked = lockedPath !== null;
+
+	// While a page has locked the site, going anywhere else (for example with the
+	// browser's Back button) blocks access to the website.
+	useEffect(() => {
+		if (lockedPath && pathname !== lockedPath) blockAccess();
+	}, [pathname, lockedPath, blockAccess]);
 
 	useEffect(() => {
 		try {
@@ -51,6 +60,7 @@ export function Layout() {
 					type="button"
 					className={styles.menuButton}
 					onClick={() => setMobileOpen(true)}
+					disabled={locked}
 					aria-label="Open menu"
 					aria-controls="sidebar"
 					aria-expanded={mobileOpen}
@@ -60,6 +70,7 @@ export function Layout() {
 			</header>
 
 			<Sidebar
+				locked={locked}
 				collapsed={collapsed}
 				onToggleCollapsed={() => setCollapsed((value) => !value)}
 				mobileOpen={mobileOpen}

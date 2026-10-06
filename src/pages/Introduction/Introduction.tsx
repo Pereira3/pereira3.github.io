@@ -11,15 +11,22 @@ import {
 	ongoingProjects,
 } from "@/data/projects";
 import { categoryIcons } from "@/data/categoryIcons";
+import { AiBadge } from "@/components/AiBadge/AiBadge";
 import { pageTitle } from "@/utils/pageTitle";
 import styles from "@/pages/Introduction/Introduction.module.css";
 
 type Shortcut = {
 	to: string;
 	title: string;
-	summary: string;
+	summary?: string; // a line under the title; integrated projects have none
 	icon: LucideIcon;
+	aiAssisted?: boolean; // shows the "AI assisted" label at the bottom
 };
+
+// A status, followed by the first line of the description when the project has one.
+function summarize(status: string, description?: string): string {
+	return description ? `${status} ${description.split("\n")[0]}` : status;
+}
 
 // One shortcut per ongoing and integrated project and per archive category, built from
 // projects.ts, so this page stays up to date when projects are added or archived.
@@ -27,14 +34,15 @@ const shortcuts: Shortcut[] = [
 	...integratedProjects.map((project) => ({
 		to: `/projects/${project.id}`,
 		title: project.title,
-		summary: `Runs inside this site. ${project.description.split("\n")[0]}`,
 		icon: AppWindow,
+		aiAssisted: project.aiAssisted,
 	})),
 	...ongoingProjects.map((project) => ({
 		to: `/projects/${project.id}`,
 		title: project.title,
-		summary: `In progress. ${project.description.split("\n")[0]}`,
+		summary: summarize("In progress.", project.description),
 		icon: FolderGit2,
+		aiAssisted: project.aiAssisted,
 	})),
 	...archiveCategoriesInUse.map((category) => {
 		const projects = getArchivedProjects(category.id);
@@ -76,30 +84,47 @@ export function Introduction() {
 					Explore
 				</h2>
 				<ul className={styles.shortcuts}>
-					{shortcuts.map(({ to, title, summary, icon: Icon }) => (
-						<li key={to}>
-							<Link className={styles.shortcut} to={to}>
-								<Icon
-									className={styles.shortcutIcon}
-									size={22}
-									aria-hidden="true"
-								/>
-								<span className={styles.shortcutText}>
-									<span className={styles.shortcutTitle}>
-										{title}
+					{shortcuts.map(
+						({ to, title, summary, icon: Icon, aiAssisted }) => (
+							<li key={to}>
+								<Link className={styles.shortcut} to={to}>
+									<Icon
+										className={styles.shortcutIcon}
+										size={22}
+										aria-hidden="true"
+									/>
+									<span className={styles.shortcutText}>
+										<span className={styles.shortcutTitle}>
+											{title}
+										</span>
+										{summary && (
+											<span
+												className={
+													styles.shortcutSummary
+												}
+											>
+												{summary}
+											</span>
+										)}
+										{aiAssisted && (
+											<span
+												className={
+													styles.shortcutLabels
+												}
+											>
+												<AiBadge />
+											</span>
+										)}
 									</span>
-									<span className={styles.shortcutSummary}>
-										{summary}
-									</span>
-								</span>
-								<ArrowRight
-									className={styles.shortcutArrow}
-									size={18}
-									aria-hidden="true"
-								/>
-							</Link>
-						</li>
-					))}
+									<ArrowRight
+										className={styles.shortcutArrow}
+										size={18}
+										aria-hidden="true"
+									/>
+								</Link>
+							</li>
+						),
+					)}
 				</ul>
 			</section>
 		</article>

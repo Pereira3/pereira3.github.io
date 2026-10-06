@@ -115,6 +115,11 @@
 	font-variant-numeric: tabular-nums;
 }
 
+/* Labels such as "AI assisted", on their own line under the title. */
+.labels {
+	margin-top: 0.5rem;
+}
+
 .description {
 	margin-top: 0.625rem;
 	white-space: pre-line; /* shows \n in the text as a line break */

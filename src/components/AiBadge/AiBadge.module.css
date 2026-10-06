@@ -1,0 +1,19 @@
+/* A pill like the project tags, with an accent border so it stands apart from them. */
+.badge {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.3125rem;
+	padding: 0.125rem 0.625rem;
+	border: 1px solid var(--accent);
+	border-radius: 999px;
+	font-size: 0.8125rem;
+	font-weight: 600;
+	line-height: 1.6;
+	color: var(--text-muted);
+	white-space: nowrap;
+}
+
+.icon {
+	flex-shrink: 0;
+	color: var(--accent);
+}

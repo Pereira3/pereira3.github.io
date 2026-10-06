@@ -22,6 +22,10 @@
 	--rule: light-dark(#bbdefb, #014f86);
 	--accent: light-dark(#1e88e5, #61a5c2);
 	--accent-soft: light-dark(#90caf9, #a9d6e5);
+	/* Filled buttons: dark enough in light mode, light enough in dark mode, for readable labels. */
+	--button-bg: light-dark(#1565c0, #a9d6e5);
+	--button-bg-hover: light-dark(#0d47a1, #89c2d9);
+	--button-text: light-dark(#ffffff, #012a4a);
 	/* Light mode: white cards lifted by a soft shadow. Dark mode: flat cards with a border. */
 	--card-border: light-dark(transparent, #014f86);
 	--card-shadow: light-dark(rgba(13, 71, 161, 0.1), transparent);
