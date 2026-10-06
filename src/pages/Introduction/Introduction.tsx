@@ -1,3 +1,4 @@
+import { useId } from "react";
 import { Link } from "react-router";
 import type { LucideIcon } from "lucide-react";
 import { AppWindow, ArrowRight, FolderGit2 } from "lucide-react";
@@ -49,6 +50,7 @@ const shortcuts: Shortcut[] = [
 ];
 
 export function Introduction() {
+	const exploreId = useId();
 	return (
 		<article>
 			<title>{pageTitle()}</title>
@@ -69,8 +71,8 @@ export function Introduction() {
 				<FaGithub size={22} aria-hidden="true" />
 			</a>
 
-			<section className={styles.section} aria-labelledby="explore-title">
-				<h2 className={styles.sectionTitle} id="explore-title">
+			<section className={styles.section} aria-labelledby={exploreId}>
+				<h2 className={styles.sectionTitle} id={exploreId}>
 					Explore
 				</h2>
 				<ul className={styles.shortcuts}>

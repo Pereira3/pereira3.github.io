@@ -1,11 +1,11 @@
 import { Link } from "react-router";
-import { profile } from "@/data/profile";
+import { pageTitle } from "@/utils/pageTitle";
 import page from "@/styles/Page.module.css";
 
 export function NotFound() {
 	return (
 		<article>
-			<title>{`${profile.websiteName} - Page not found`}</title>
+			<title>{pageTitle("Page not found")}</title>
 
 			<h1 className={page.title}>Page not found</h1>
 			<p className={page.lead}>

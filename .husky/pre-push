@@ -1,3 +1,5 @@
-# Lints and type-checks the whole project, so nothing broken reaches GitHub.
+# Lints, type-checks and checks the formatting of the whole project, so nothing
+# broken reaches GitHub (the deploy runs the same checks).
 npm run lint
 npm run typecheck
+npm run format:check

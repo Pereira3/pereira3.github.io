@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useSyncExternalStore } from "react";
 import { Moon, Sun } from "lucide-react";
 
 type Theme = "light" | "dark";
@@ -8,10 +8,26 @@ const THEME_KEY = "theme";
 const systemDark = window.matchMedia("(prefers-color-scheme: dark)");
 
 // The theme on screen right now: the visitor's choice, or else the system setting.
+// The data-theme attribute on <html> is the one place the choice is kept.
 function currentTheme(): Theme {
 	const chosen = document.documentElement.dataset.theme;
 	if (chosen === "light" || chosen === "dark") return chosen;
 	return systemDark.matches ? "dark" : "light";
+}
+
+// Tells React when the theme on screen may have changed: when data-theme changes
+// (from any toggle) or when the system setting changes.
+function subscribe(onChange: () => void) {
+	const observer = new MutationObserver(onChange);
+	observer.observe(document.documentElement, {
+		attributes: true,
+		attributeFilter: ["data-theme"],
+	});
+	systemDark.addEventListener("change", onChange);
+	return () => {
+		observer.disconnect();
+		systemDark.removeEventListener("change", onChange);
+	};
 }
 
 type ThemeToggleProps = {
@@ -19,14 +35,7 @@ type ThemeToggleProps = {
 };
 
 export function ThemeToggle({ className }: ThemeToggleProps) {
-	const [theme, setTheme] = useState<Theme>(currentTheme);
-
-	// Until the visitor picks a theme, keep the icon in sync if the system setting changes.
-	useEffect(() => {
-		const onSystemChange = () => setTheme(currentTheme());
-		systemDark.addEventListener("change", onSystemChange);
-		return () => systemDark.removeEventListener("change", onSystemChange);
-	}, []);
+	const theme = useSyncExternalStore(subscribe, currentTheme);
 
 	function toggleTheme() {
 		const next: Theme = theme === "dark" ? "light" : "dark";
@@ -36,7 +45,6 @@ export function ThemeToggle({ className }: ThemeToggleProps) {
 		} catch {
 			// Storage unavailable: the theme still changes, it just won't be remembered.
 		}
-		setTheme(next);
 	}
 
 	const label =

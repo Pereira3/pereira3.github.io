@@ -4,7 +4,7 @@ import { HashRouter } from "react-router";
 import "@fontsource-variable/bricolage-grotesque";
 import App from "@/App";
 
-// HashRouter keeps URLs like /#/university, which GitHub Pages can serve
+// HashRouter keeps URLs like /#/archived/university, which GitHub Pages can serve
 // without returning a 404 when someone refreshes or opens a shared link.
 createRoot(document.getElementById("root")!).render(
 	<StrictMode>

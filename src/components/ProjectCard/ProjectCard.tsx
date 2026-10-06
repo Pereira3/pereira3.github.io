@@ -37,7 +37,7 @@ export function ProjectCard({
 			<p className={styles.description}>{project.description}</p>
 
 			<div className={styles.footer}>
-				{project.tags && project.tags.length > 0 ? (
+				{project.tags && project.tags.length > 0 && (
 					<ul className={styles.tags} aria-label="Built with">
 						{project.tags.map((tag) => (
 							<li key={tag} className={styles.tag}>
@@ -45,8 +45,6 @@ export function ProjectCard({
 							</li>
 						))}
 					</ul>
-				) : (
-					<span />
 				)}
 
 				<div className={styles.actions}>

@@ -23,12 +23,7 @@ export function ArchivedProjects() {
 			<p className={page.lead}>{category.description}</p>
 
 			{projects.length === 0 ? (
-				<p className={page.empty}>
-					Nothing here yet. Add a project in{" "}
-					<code>src/data/projects.ts</code> with{" "}
-					<code>status: "archived"</code> and{" "}
-					<code>category: "{category.id}"</code>.
-				</p>
+				<p className={page.empty}>Nothing here yet. Check back soon.</p>
 			) : (
 				<ul className={styles.list}>
 					{projects.map((project) => (

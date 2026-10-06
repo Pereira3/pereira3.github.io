@@ -26,7 +26,7 @@ jobs:
           cache: npm
 
       - run: npm ci
-      # Same checks as ci.yml, so nothing unchecked reaches the live site.
+      # Same checks as the git hooks, again here so nothing unchecked reaches the live site.
       - run: npm run lint
       - run: npm run format:check
       - run: npm run build

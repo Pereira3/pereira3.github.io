@@ -67,13 +67,15 @@ type NavGroupProps = {
 };
 
 // A titled section of the sidebar, separated from the one above by a line.
+// The title labels the list rather than being a heading, so headings start with the
+// page's own <h1> instead of the sidebar, which comes first in the page.
 function NavGroup({ title, isEmpty, children }: NavGroupProps) {
 	const id = useId();
 	return (
 		<div className={styles.group}>
-			<h2 className={styles.groupTitle} id={id}>
+			<p className={styles.groupTitle} id={id}>
 				{title}
-			</h2>
+			</p>
 			{isEmpty ? (
 				<p className={styles.empty}>None right now</p>
 			) : (

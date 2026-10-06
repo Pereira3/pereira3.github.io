@@ -83,7 +83,9 @@
 	border-top: 1px solid var(--sidebar-rule);
 }
 
+/* A label, not a heading, so the page's <h1> stays the first heading; same look as before. */
 .groupTitle {
+	line-height: 1.15;
 	padding: 0 0.75rem 0.5rem;
 	font-size: 0.8125rem;
 	font-weight: 500;

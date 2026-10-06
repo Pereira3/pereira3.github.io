@@ -30,7 +30,8 @@ export function ProjectPage() {
 					href={project.repoUrl}
 					target="_blank"
 					rel="noreferrer"
-					aria-label={`Code for ${project.title} on GitHub (opens in a new tab)`}
+					// Starts with the visible text, so voice control finds it by what it says.
+					aria-label={`Project Repo: code for ${project.title} on GitHub (opens in a new tab)`}
 				>
 					<FaGithub size={20} aria-hidden="true" />
 					<span className={page.textLink}>Project Repo</span>
