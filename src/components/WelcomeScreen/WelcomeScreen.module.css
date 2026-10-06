@@ -1,0 +1,110 @@
+/* Wraps the site without affecting the layout; it only lets the site be made inert as a whole. */
+.site {
+	display: contents;
+}
+
+/*
+  Timeline: the glow and the white of the word sweep together from the top left corner
+  to the bottom right one, from 0.4s to 2.8s. The finished screen holds briefly, then fades
+  out over 0.6s, from 3.2s to 3.8s.
+  The sweep's timing lives in the three variables below, shared by the glow and the word,
+  so they always move together. If you lengthen the sweep, raise the fade-out delay too,
+  and keep FALLBACK_MS in WelcomeScreen.tsx a little longer than the whole animation.
+*/
+.screen {
+	--sweep-duration: 2.4s;
+	--sweep-delay: 0.4s;
+	--sweep-easing: cubic-bezier(0.4, 0, 0.6, 1);
+
+	position: fixed;
+	inset: 0;
+	z-index: 50;
+	display: grid;
+	place-items: center;
+	background: #011f37;
+	animation: fade-out 600ms ease-in 3.2s forwards;
+}
+
+/*
+  The glow: a gradient from light blue in the top left corner to navy in the bottom right one.
+  A mask hides it at first and slides away diagonally, so the light spreads from corner to corner.
+*/
+.screen::before {
+	content: "";
+	position: absolute;
+	inset: 0;
+	background: linear-gradient(
+		135deg,
+		#2c7da0,
+		#01497c 40%,
+		#012a4a 75%,
+		#011f37
+	);
+	mask-image: linear-gradient(135deg, #000 45%, transparent 55%);
+	mask-size: 300% 300%;
+	mask-position: 100% 100%;
+	animation: spread var(--sweep-duration) var(--sweep-easing)
+		var(--sweep-delay) forwards;
+}
+
+/*
+  The word turns white exactly where the glow has reached. Its white is the same diagonal
+  shape as the glow's mask, sized and placed against the whole screen (background-attachment:
+  fixed) rather than against the word, so the edge of the white and the edge of the light
+  are always in the same place.
+*/
+.word {
+	position: relative; /* sits above the glow */
+	margin: 0;
+	font-size: clamp(3.5rem, 14vw, 9rem);
+	font-weight: 750;
+	letter-spacing: -0.04em;
+	line-height: 1;
+	color: transparent;
+	background: linear-gradient(
+			135deg,
+			#ffffff 45%,
+			rgba(255, 255, 255, 0.12) 55%
+		)
+		100% 100% / 300% 300% no-repeat fixed;
+	-webkit-background-clip: text;
+	background-clip: text;
+	animation: fill var(--sweep-duration) var(--sweep-easing) var(--sweep-delay)
+		forwards;
+}
+
+@keyframes spread {
+	to {
+		mask-position: 0 0;
+	}
+}
+
+@keyframes fill {
+	to {
+		background-position: 0 0;
+	}
+}
+
+@keyframes fade-out {
+	to {
+		opacity: 0;
+		visibility: hidden;
+	}
+}
+
+/* Visitors who reduce motion see the finished screen, which then fades away. */
+@media (prefers-reduced-motion: reduce) {
+	.screen {
+		animation-delay: 1.5s;
+	}
+
+	.screen::before {
+		animation: none;
+		mask-position: 0 0;
+	}
+
+	.word {
+		animation: none;
+		background-position: 0 0;
+	}
+}
