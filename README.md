@@ -24,7 +24,10 @@ npm run format    # format
 
 ## To implement
 
-- Idea to add the push history to the page.
+Remove scrollable pages and interfaces.
+Add git commit history for ongoing projects.
+Verify manually captchas like Typing, Reaction, Puzzle and Memory.
+Test and see Speech viewer, screen reader accessibility, prefers-reduced-motion, keyboard only use, website on phone (mainly hold captcha, runaway button and overall content fit), zoom (200%) and high contrast with forced-colors as true.
 
 ## Notes
 

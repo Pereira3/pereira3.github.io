@@ -1,13 +1,18 @@
-import type { ComponentProps, ReactNode } from "react";
+import type { ReactNode } from "react";
 import { Cookie } from "lucide-react";
 import { ColorWordStep } from "@/projects/AreYouHuman/ColorWordStep";
 import { DistortedTextStep } from "@/projects/AreYouHuman/DistortedTextStep";
+import { HoldStep } from "@/projects/AreYouHuman/HoldStep";
 import { ImageGridStep } from "@/projects/AreYouHuman/ImageGridStep";
 import { LocalTimeStep } from "@/projects/AreYouHuman/LocalTimeStep";
+import { MemoryStep } from "@/projects/AreYouHuman/MemoryStep";
+import { PatienceStep } from "@/projects/AreYouHuman/PatienceStep";
 import { PuzzleStep } from "@/projects/AreYouHuman/PuzzleStep";
 import { QuestionStep } from "@/projects/AreYouHuman/QuestionStep";
+import type { Question } from "@/projects/AreYouHuman/QuestionStep";
 import { ReactionStep } from "@/projects/AreYouHuman/ReactionStep";
 import { RobotCheckStep } from "@/projects/AreYouHuman/RobotCheckStep";
+import { RotateStep } from "@/projects/AreYouHuman/RotateStep";
 import { TypingRaceStep } from "@/projects/AreYouHuman/TypingRaceStep";
 import { pick, shuffle } from "@/projects/AreYouHuman/random";
 import {
@@ -38,10 +43,15 @@ export type StepProps = {
 
 export type Step = {
 	id: string;
-	seconds: number; // time limit; when it runs out, the site closes
+	seconds: number; // time limit; running out closes the site (see passesWhenTimeIsUp)
 	follows?: string; // the id of a step this one always comes right after
+	// true when running out of time is the goal, not a failure: the site stays open and
+	// the step passes by itself once its time is up (the patience test).
+	passesWhenTimeIsUp?: boolean;
 	render: (props: StepProps) => ReactNode;
 };
+
+const PATIENCE_SECONDS = 15; // the patience test's whole wait, filled with begging
 
 // The date exactly 18 years ago, written out, e.g. "6 October 2008".
 function eighteenYearsAgo(): string {
@@ -54,33 +64,35 @@ function eighteenYearsAgo(): string {
 	});
 }
 
-// A plain yes/no question: what QuestionStep shows, except the step's own props.
-type Question = Omit<
-	ComponentProps<typeof QuestionStep>,
-	keyof StepProps | "question"
-> & {
-	question: string | (() => string); // a function for text that changes, like a date
-};
-
-// Time to read a question and its description and answer it: their reading time, plus
-// 4 seconds to decide, and never under 10.
-function questionSeconds(...texts: string[]): number {
+// A question's time limit, in seconds: long enough to read everything on screen and
+// answer, so longer questions get more time without anyone picking a number.
+//
+// How it's worked out:
+// 1. The text the visitor reads: the question, its description and each choice's
+//    label. Yes/no button labels aren't counted: a word or two, covered by step 3.
+// 2. Its reading time: a third of a second per word (see readingMs).
+// 3. Plus 4 seconds to decide and press a button.
+// 4. Never under 10 seconds, so even the shortest question isn't rushed.
+//
+// In short: max(10, words / 3 + 4). For example:
+// - "Is a tomato a fruit…" with two short choices, 14 words: 8.7s, raised to 10s.
+// - "What is the right order?" with the four sock orders, 21 words: 7s + 4s = 11s.
+function questionSeconds({
+	question,
+	text = "",
+	choices = [],
+}: Question): number {
+	const texts = [question, text, ...choices.map((choice) => choice.label)];
 	return readingMs(texts.join(" "), { extra: 4000, min: 10_000 }) / 1000;
 }
 
-// A yes/no question as a step, with a time limit that fits its length.
+// A question as a step, with a time limit that fits its length.
 function questionStep(id: string, question: Question, follows?: string): Step {
-	const ask = () =>
-		typeof question.question === "function"
-			? question.question()
-			: question.question;
 	return {
 		id,
 		follows,
-		seconds: questionSeconds(ask(), question.text ?? ""),
-		render: (props) => (
-			<QuestionStep {...props} {...question} question={ask()} />
-		),
+		seconds: questionSeconds(question),
+		render: (props) => <QuestionStep {...props} {...question} />,
 	};
 }
 
@@ -145,8 +157,7 @@ export const steps: Step[] = [
 	questionStep(
 		"adult-again",
 		{
-			question: () =>
-				`Just to be sure: were you born on or before ${eighteenYearsAgo()}?`,
+			question: `Just to be sure: were you born on or before ${eighteenYearsAgo()}?`,
 			replyToNo: ADULT_MISCALCULATED,
 		},
 		"adult",
@@ -181,10 +192,74 @@ export const steps: Step[] = [
 	{
 		id: "local-time",
 		// The time shown changes, but the question's length doesn't.
-		seconds: questionSeconds(timeQuestion(localTime())),
+		seconds: questionSeconds({ question: timeQuestion(localTime()) }),
 		render: (props) => <LocalTimeStep {...props} question={timeQuestion} />,
 	},
 	questionStep("system", systemQuestion()),
+	questionStep("ever-a-robot", {
+		question: "Have you ever been a robot? Even just a little bit?",
+		choices: [{ label: "No" }, { label: "Maybe 🤓", fails: true }],
+	}),
+	questionStep("tomato", {
+		question: "Botanically speaking, is a tomato a fruit or a vegetable?",
+		choices: [{ label: "A fruit" }, { label: "A vegetable", fails: true }],
+	}),
+	questionStep("socks-and-shoes", {
+		question: "What is the right order?",
+		choices: [
+			{ label: "Sock, sock, shoe, shoe", reply: "Correct 😌" },
+			{
+				label: "Sock, shoe, sock, shoe",
+				reply: "You should reconsider your life choices 🤨",
+			},
+			{ label: "Shoe, shoe, sock, sock", fails: true },
+			{ label: "Shoe, sock, shoe, sock", fails: true },
+		],
+	}),
+	questionStep("cereal", {
+		question: "Milk before cereal, or cereal before milk?",
+		choices: [
+			{
+				label: "Milk first 🥛",
+				reply: "Correct, I'm glad we agree 😋",
+			},
+			{ label: "Cereal first 🥣", reply: "You're just a weirdo 🤧" },
+		],
+	}),
+	questionStep("toothpaste", {
+		question: "What is the right order?",
+		choices: [
+			{
+				label: "Toothpaste on the brush, then water",
+				reply: "I'll let it slide, but you still have a lot to learn",
+			},
+			{
+				label: "Water on the brush, then toothpaste",
+				reply: "Not ideal, but better than the other way around",
+			},
+			{
+				label: "Water on the brush, then toothpaste, then water",
+				reply: "I see you take this business seriously 😌",
+			},
+			{
+				label: "Toothpaste on the brush, then water, then toothpaste",
+				fails: true,
+			},
+		],
+	}),
+	questionStep("pineapple", {
+		question: "Pizza with or without pineapple?",
+		choices: [
+			{
+				label: "With pineapple 🍍",
+				reply: "Nice to see I'm not alone 🥹",
+			},
+			{
+				label: "Without pineapple 🍕",
+				reply: "I'll turn a blind eye this time, but I'm almost certain your life is bland 😐",
+			},
+		],
+	}),
 	{
 		id: "not-a-robot",
 		seconds: 10,
@@ -214,6 +289,29 @@ export const steps: Step[] = [
 		id: "distorted-text",
 		seconds: 25,
 		render: (props) => <DistortedTextStep {...props} />,
+	},
+	{
+		id: "hold",
+		seconds: 30, // up to four holds of about 3 seconds, and time to read between them
+		render: (props) => <HoldStep {...props} />,
+	},
+	{
+		id: "rotate",
+		seconds: 30, // three animals
+		render: (props) => <RotateStep {...props} />,
+	},
+	{
+		id: "patience",
+		seconds: PATIENCE_SECONDS,
+		passesWhenTimeIsUp: true,
+		render: (props) => (
+			<PatienceStep {...props} ms={PATIENCE_SECONDS * 1000} />
+		),
+	},
+	{
+		id: "memory",
+		seconds: 50, // watching the three sequences takes about 10 of them
+		render: (props) => <MemoryStep {...props} />,
 	},
 	{
 		id: "typing-race",

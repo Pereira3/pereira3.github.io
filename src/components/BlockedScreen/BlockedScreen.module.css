@@ -51,9 +51,17 @@
 	color: #0d47a1;
 	font: inherit;
 	font-weight: 650;
+	/* translate moves it when it runs from the mouse (set inline); transform lifts it on hover. */
 	transition:
+		translate 280ms cubic-bezier(0.2, 0.9, 0.3, 1.2),
 		transform 200ms ease,
 		box-shadow 200ms ease;
+}
+
+/* Away from home, or on its way back: the mouse can't hover or click it, only follow it.
+   The keyboard still can, since it never ran from the keyboard. */
+.button:not([data-phase="home"]) {
+	pointer-events: none;
 }
 
 .button:hover {
@@ -72,5 +80,10 @@
 
 	.button:hover {
 		transform: none;
+	}
+
+	/* It still runs from the mouse, but jumps instead of sliding. */
+	.button {
+		transition: box-shadow 200ms ease;
 	}
 }

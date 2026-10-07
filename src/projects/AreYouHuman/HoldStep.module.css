@@ -1,0 +1,41 @@
+/* A big round button. While held it sinks a little, but nothing shows the time. */
+.button {
+	display: grid;
+	place-items: center;
+	align-content: center;
+	gap: 0.25rem;
+	width: 9rem;
+	aspect-ratio: 1;
+	margin: 0.5rem 0;
+	padding: 0;
+	border: 4px solid var(--rule);
+	border-radius: 50%;
+	background: var(--page-bg);
+	color: var(--text);
+	font: inherit;
+	font-weight: 650;
+	/* Holding mustn't scroll the page, select text or open a menu on phones. */
+	touch-action: none;
+	user-select: none;
+	-webkit-user-select: none;
+	-webkit-touch-callout: none;
+	transition:
+		transform 150ms ease,
+		border-color var(--speed),
+		background-color var(--speed);
+}
+
+.button:hover {
+	border-color: var(--accent);
+}
+
+.button[data-holding="true"] {
+	transform: scale(0.94);
+	border-color: var(--accent);
+	background: var(--surface-hover);
+}
+
+.button:disabled {
+	border-color: #2e9d57;
+	cursor: default;
+}

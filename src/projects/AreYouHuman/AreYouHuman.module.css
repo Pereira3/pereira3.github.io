@@ -80,6 +80,12 @@
 	color: var(--text-muted);
 }
 
+/* How long the whole verification took, on the final screen. */
+.time {
+	font-size: 1.125rem;
+	font-variant-numeric: tabular-nums;
+}
+
 /* What a game asks the visitor to do. */
 .instruction {
 	font-size: 1.125rem;
@@ -110,6 +116,14 @@
 	flex-wrap: wrap;
 	justify-content: center;
 	gap: 0.75rem;
+	margin-top: 0.5rem;
+}
+
+/* A question's choices, one per line, all as wide as the longest. */
+.choices {
+	display: grid;
+	gap: 0.625rem;
+	width: min(100%, 22rem);
 	margin-top: 0.5rem;
 }
 

@@ -1,0 +1,54 @@
+.board {
+	position: relative;
+	display: grid;
+	grid-template-columns: repeat(2, 1fr);
+	gap: 0.625rem;
+	width: min(100%, 16rem);
+}
+
+/* Dim in its color (--square, set inline), bright and glowing while lit. */
+.square {
+	aspect-ratio: 1;
+	padding: 0;
+	border: 0;
+	border-radius: 12px;
+	background: var(--square);
+	opacity: 0.3;
+	transition:
+		opacity 120ms ease,
+		box-shadow 120ms ease,
+		scale 120ms ease;
+}
+
+.square:not(:disabled):hover {
+	opacity: 0.45;
+}
+
+.square[data-lit="true"] {
+	opacity: 1;
+	box-shadow: 0 0 22px var(--square);
+	scale: 1.04;
+}
+
+.square:disabled {
+	cursor: default;
+}
+
+/* On top of the board, in its centre, until the first sequence plays. */
+.start {
+	position: absolute;
+	inset: 50% auto auto 50%;
+	translate: -50% -50%;
+}
+
+/* Only shown after a miss. */
+.misses {
+	font-size: 0.875rem;
+	font-weight: 600;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.square[data-lit="true"] {
+		scale: 1;
+	}
+}

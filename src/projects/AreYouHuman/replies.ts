@@ -1,5 +1,6 @@
 // Every reply to a "no" that doesn't close the site (QuestionStep's replyToNo).
 // QuestionStep shows them; the questions (steps.tsx, LocalTimeStep.tsx) pick which.
+// The multiple-choice questions' replies are next to their choices, in steps.tsx.
 //
 // Most are for the questions about what the browser gave away: its language, clock and
 // system. The visitor may be right to say no there, so the reply depends on whether
