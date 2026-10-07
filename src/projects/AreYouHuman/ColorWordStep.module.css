@@ -1,16 +1,12 @@
-/* Same colored header as the image grid. */
-.prompt {
-	display: grid;
-	gap: 0.125rem;
-	width: 100%;
-	padding: 0.875rem 1rem;
-	border-radius: 8px;
-	background: var(--button-bg);
-	color: var(--button-text);
-	text-align: left;
-}
-
-.prompt strong {
+/*
+  The color to find, written in a different ink, on the squares' dark background so
+  every ink reads well in both themes.
+*/
+.promptWord {
+	justify-self: start;
+	padding: 0.125rem 0.5rem;
+	border-radius: 6px;
+	background: #0f2133;
 	font-size: 1.375rem;
 	line-height: 1.2;
 }
@@ -44,10 +40,4 @@
 
 .square:hover {
 	transform: scale(0.95);
-}
-
-.round {
-	font-size: 0.875rem;
-	font-weight: 600;
-	color: var(--text-muted);
 }

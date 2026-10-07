@@ -1,12 +1,13 @@
-import { useEffect, useEffectEvent, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { useTimeout } from "@/hooks/useTimeout";
 import type { StepProps } from "@/projects/AreYouHuman/steps";
 import { randomBetween } from "@/projects/AreYouHuman/random";
 import shared from "@/projects/AreYouHuman/AreYouHuman.module.css";
 import styles from "@/projects/AreYouHuman/ReactionStep.module.css";
 
 const TARGETS = 10; // circles to hit in a row
-const FIRST_MS = 2000; // how long the first circle takes to shrink away
-const LAST_MS = 1300; // and the last one; the ones between get steadily faster
+const FIRST_MS = 2600; // how long the first circle takes to shrink away
+const LAST_MS = 1800; // and the last one; the ones between get steadily faster
 
 type Circle = {
 	index: number;
@@ -26,25 +27,25 @@ function makeCircle(index: number): Circle {
 
 // A reaction test in the spirit of osu!: circles appear one at a time and shrink away.
 // Hit each one before it disappears, ten in a row. Missing one fails.
-export function ReactionStep({ pass, fail, pauseTimer }: StepProps) {
+export function ReactionStep({ pass, fail, removeTimer }: StepProps) {
 	const [circle, setCircle] = useState<Circle | null>(null); // null until the visitor starts
 	const circleRef = useRef<HTMLButtonElement>(null);
-	const onMiss = useEffectEvent(fail);
 
-	// Each circle has its own deadline, matching its shrinking animation. The deadline is a
-	// timer rather than the animation's end, so it holds even if animations are turned off.
+	// Each circle has its own deadline, matching its shrinking animation, and a new circle
+	// starts it over. The deadline is a timer rather than the animation's end, so it holds
+	// even if animations are turned off.
+	useTimeout(fail, circle ? circle.ms : null, circle);
+
 	// Focus moves to each new circle, so it can also be hit with Space or Enter.
 	useEffect(() => {
-		if (!circle) return;
 		circleRef.current?.focus();
-		const timer = window.setTimeout(onMiss, circle.ms);
-		return () => window.clearTimeout(timer);
 	}, [circle]);
 
-	// Once the game starts, each circle's deadline is the clock: the step's own countdown
-	// stops, so it can't run out mid-game while the visitor is still hitting circles.
+	// Once the game starts, each circle's deadline is the clock: the step's countdown and
+	// its bar are removed, so it can't run out mid-game while the visitor is still hitting
+	// circles, and the shrinking circle is the only time on screen.
 	function start() {
-		pauseTimer();
+		removeTimer();
 		setCircle(makeCircle(0));
 	}
 
@@ -56,7 +57,7 @@ export function ReactionStep({ pass, fail, pauseTimer }: StepProps) {
 
 	return (
 		<>
-			<p className={styles.instruction}>
+			<p className={shared.instruction}>
 				Hit each circle before it disappears.
 			</p>
 
@@ -86,7 +87,7 @@ export function ReactionStep({ pass, fail, pauseTimer }: StepProps) {
 				)}
 			</div>
 
-			<p className={styles.count}>
+			<p className={shared.counter}>
 				{circle
 					? `${circle.index} of ${TARGETS} hit`
 					: `${TARGETS} circles, each a little faster than the last.`}

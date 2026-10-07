@@ -55,7 +55,7 @@ export function DistortedTextStep({ pass, fail }: StepProps) {
 
 	return (
 		<>
-			<p className={styles.instruction}>Type the text you see.</p>
+			<p className={shared.instruction}>Type the text you see.</p>
 
 			<div className={styles.frame}>
 				<svg

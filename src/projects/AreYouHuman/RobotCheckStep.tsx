@@ -1,24 +1,24 @@
-import { useEffect, useEffectEvent, useId, useState } from "react";
+import { useId, useState } from "react";
 import { Check, LoaderCircle, ShieldCheck } from "lucide-react";
+import { useTimeout } from "@/hooks/useTimeout";
 import type { StepProps } from "@/projects/AreYouHuman/steps";
 import styles from "@/projects/AreYouHuman/RobotCheckStep.module.css";
+
+const CHECKING_MS = 1400; // how long the pretend check spins
+const CHECKED_MS = 700; // time to see the tick before the next check
 
 type State = "idle" | "checking" | "checked";
 
 // The classic "I'm not a robot" box: tick it, wait for the check, continue.
 export function RobotCheckStep({ pass, pauseTimer }: StepProps) {
 	const [state, setState] = useState<State>("idle");
-	const onChecked = useEffectEvent(pass);
 	const labelId = useId();
 
-	useEffect(() => {
-		if (state === "idle") return;
-		const timer = window.setTimeout(
-			() => (state === "checking" ? setState("checked") : onChecked()),
-			state === "checking" ? 1400 : 700,
-		);
-		return () => window.clearTimeout(timer);
-	}, [state]);
+	useTimeout(
+		() => setState("checked"),
+		state === "checking" ? CHECKING_MS : null,
+	);
+	useTimeout(pass, state === "checked" ? CHECKED_MS : null);
 
 	return (
 		<div className={styles.box}>

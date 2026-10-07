@@ -20,7 +20,7 @@ type Shortcut = {
 	title: string;
 	summary?: string; // a line under the title; integrated projects have none
 	icon: LucideIcon;
-	aiAssisted?: boolean; // shows the "AI assisted" label at the bottom
+	aiAssisted?: boolean; // shows the "AI Assisted" label beside the title
 };
 
 // A status, followed by the first line of the description when the project has one.
@@ -94,8 +94,15 @@ export function Introduction() {
 										aria-hidden="true"
 									/>
 									<span className={styles.shortcutText}>
-										<span className={styles.shortcutTitle}>
-											{title}
+										<span
+											className={styles.shortcutHeading}
+										>
+											<span
+												className={styles.shortcutTitle}
+											>
+												{title}
+											</span>
+											{aiAssisted && <AiBadge />}
 										</span>
 										{summary && (
 											<span
@@ -104,15 +111,6 @@ export function Introduction() {
 												}
 											>
 												{summary}
-											</span>
-										)}
-										{aiAssisted && (
-											<span
-												className={
-													styles.shortcutLabels
-												}
-											>
-												<AiBadge />
 											</span>
 										)}
 									</span>

@@ -42,10 +42,13 @@ type ProjectInfo = {
 	id: string; // used in the URL of ongoing and integrated projects: #/projects/<id>
 	title: string;
 	description?: string;
+	// a side remark in small italics on the project's page, under the description,
+	// such as a privacy note
+	note?: string;
 	repoUrl?: string;
 	year?: number;
 	tags?: string[];
-	// true shows an "AI assisted" label on the project's page, its card and its
+	// true shows an "AI Assisted" label on the project's page, its card and its
 	// Introduction shortcut (not in the sidebar)
 	aiAssisted?: boolean;
 	details?: ProjectDetails; // without it, the card has no "Show details" button
@@ -66,6 +69,7 @@ export const projects: Project[] = [
 	{
 		id: "are-you-human",
 		title: "Are You Human?",
+		note: "No data is collected. The only information used is what your browser already gives away to every website, like its language, clock and system. It's never saved, not even in your browser's storage: it's used for the questions, then thrown away.",
 		status: "integrated",
 		aiAssisted: true,
 	},
@@ -79,11 +83,6 @@ export const projects: Project[] = [
 		year: 2026,
 		tags: ["React", "TypeScript", "Vite", "GitHub Pages"],
 		aiAssisted: true,
-	},
-	{
-		id: "project_ms",
-		title: "MS",
-		status: "ongoing",
 	},
 	{
 		id: "ep-management",

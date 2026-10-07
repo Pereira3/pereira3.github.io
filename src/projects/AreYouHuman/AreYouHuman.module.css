@@ -25,6 +25,7 @@
 	width: 100%;
 }
 
+/* Small counts: the check number above each step, and a game's progress below it. */
 .counter {
 	font-size: 0.875rem;
 	font-weight: 600;
@@ -77,6 +78,31 @@
 
 .text {
 	color: var(--text-muted);
+}
+
+/* What a game asks the visitor to do. */
+.instruction {
+	font-size: 1.125rem;
+	font-weight: 650;
+}
+
+/* The colored header of the classic image captcha, also used by the color words. */
+.prompt {
+	display: grid;
+	gap: 0.125rem;
+	width: 100%;
+	padding: 0.875rem 1rem;
+	border-radius: 8px;
+	background: var(--button-bg);
+	color: var(--button-text);
+	text-align: left;
+}
+
+/* A step's last word, shown as plain text where its answers were, before moving on. */
+.result {
+	font-size: 1.125rem;
+	font-weight: 650;
+	color: var(--text);
 }
 
 .answers {

@@ -1,8 +1,3 @@
-.instruction {
-	font-size: 1.125rem;
-	font-weight: 650;
-}
-
 /* Holds the picture and the refresh button in its corner. */
 .frame {
 	position: relative;

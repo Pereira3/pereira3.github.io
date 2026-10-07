@@ -1,16 +1,5 @@
-/* The colored header of the classic image captcha. */
-.prompt {
-	display: grid;
-	gap: 0.125rem;
-	width: 100%;
-	padding: 0.875rem 1rem;
-	border-radius: 8px;
-	background: var(--button-bg);
-	color: var(--button-text);
-	text-align: left;
-}
-
-.prompt strong {
+/* The object to find, in the prompt header. */
+.target {
 	font-size: 1.375rem;
 	line-height: 1.2;
 }

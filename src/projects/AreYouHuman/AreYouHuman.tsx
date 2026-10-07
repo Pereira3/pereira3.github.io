@@ -7,6 +7,10 @@ import styles from "@/projects/AreYouHuman/AreYouHuman.module.css";
 
 type Phase = "start" | "running" | "passed";
 
+// The step's countdown: running, stopped, or gone for the rest of the step. The first
+// two are named like CSS's animation-play-state, so the bar can use them as they are.
+type Timer = "running" | "paused" | "removed";
+
 // A row of bot checks. While they run, the rest of the site is locked; a wrong answer,
 // running out of time or leaving the page closes the website.
 export function AreYouHuman() {
@@ -15,7 +19,7 @@ export function AreYouHuman() {
 	const [phase, setPhase] = useState<Phase>("start");
 	const [order, setOrder] = useState(steps); // shuffled again on every start
 	const [index, setIndex] = useState(0);
-	const [timerPaused, setTimerPaused] = useState(false);
+	const [timer, setTimer] = useState<Timer>("running");
 	const headingRef = useRef<HTMLHeadingElement>(null);
 	const titleId = useId();
 
@@ -28,12 +32,12 @@ export function AreYouHuman() {
 		lock(pathname);
 		setOrder(shuffledSteps());
 		setIndex(0);
-		setTimerPaused(false);
+		setTimer("running");
 		setPhase("running");
 	}
 
 	function pass() {
-		setTimerPaused(false);
+		setTimer("running");
 		if (index + 1 < order.length) {
 			setIndex(index + 1);
 		} else {
@@ -92,26 +96,30 @@ export function AreYouHuman() {
 								Check {index + 1} of {order.length}
 							</h2>
 							{/* The bar empties over the step's time limit; when it's empty, the site closes. */}
-							<div className={styles.timer} role="presentation">
+							{timer !== "removed" && (
 								<div
-									key={step.id}
-									className={styles.timerFill}
-									style={{
-										animationDuration: `${step.seconds}s`,
-										animationPlayState: timerPaused
-											? "paused"
-											: "running",
-									}}
-									onAnimationEnd={blockAccess}
-								/>
-							</div>
+									className={styles.timer}
+									role="presentation"
+								>
+									<div
+										key={step.id}
+										className={styles.timerFill}
+										style={{
+											animationDuration: `${step.seconds}s`,
+											animationPlayState: timer, // "running" or "paused" here
+										}}
+										onAnimationEnd={blockAccess}
+									/>
+								</div>
+							)}
 						</div>
 						{/* The key gives each check a fresh start, even when two checks look alike. */}
 						<Fragment key={step.id}>
 							{step.render({
 								pass,
 								fail: blockAccess,
-								pauseTimer: () => setTimerPaused(true),
+								pauseTimer: () => setTimer("paused"),
+								removeTimer: () => setTimer("removed"),
 							})}
 						</Fragment>
 					</>

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import type { StepProps } from "@/projects/AreYouHuman/steps";
 import { pick, shuffle } from "@/projects/AreYouHuman/random";
+import shared from "@/projects/AreYouHuman/AreYouHuman.module.css";
 import styles from "@/projects/AreYouHuman/ColorWordStep.module.css";
 
 // Bright inks that read well on the squares' dark background, in both themes.
@@ -25,6 +26,7 @@ const SQUARES = 6;
 
 // One round. Exactly one square is written in the target ink, and its word names another
 // color. One decoy says the target's name in another ink. No word is written in its own ink.
+// The target's name in the prompt is itself written in another ink, to confuse further.
 function makeRound() {
 	const target = pick(COLORS);
 	const others = COLORS.filter((color) => color !== target);
@@ -34,14 +36,18 @@ function makeRound() {
 		const ink = pick(others);
 		return { word: pick(COLORS.filter((color) => color !== ink)), ink };
 	});
-	return { target, squares: shuffle([answer, decoy, ...rest]) };
+	return {
+		target,
+		promptInk: pick(others),
+		squares: shuffle([answer, decoy, ...rest]),
+	};
 }
 
 // Color names written in other colors: press the one written in the asked color, not the
 // one that says it. Three rounds in a row; a wrong press fails.
 export function ColorWordStep({ pass, fail }: StepProps) {
 	const [round, setRound] = useState(0);
-	const [{ target, squares }, setGrid] = useState(makeRound);
+	const [{ target, promptInk, squares }, setGrid] = useState(makeRound);
 
 	function choose(square: Square) {
 		if (square.ink !== target) {
@@ -56,9 +62,14 @@ export function ColorWordStep({ pass, fail }: StepProps) {
 
 	return (
 		<>
-			<div className={styles.prompt}>
+			<div className={shared.prompt}>
 				<span>Press the word written in</span>
-				<strong>{target.name}</strong>
+				<strong
+					className={styles.promptWord}
+					style={{ color: promptInk.ink }}
+				>
+					{target.name}
+				</strong>
 			</div>
 
 			<ul className={styles.grid}>
@@ -78,7 +89,7 @@ export function ColorWordStep({ pass, fail }: StepProps) {
 				))}
 			</ul>
 
-			<p className={styles.round}>
+			<p className={shared.counter}>
 				Round {round + 1} of {ROUNDS}
 			</p>
 		</>

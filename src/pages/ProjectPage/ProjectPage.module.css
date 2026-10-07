@@ -1,6 +1,17 @@
-/* Labels such as "AI assisted", on their own line under the title. */
-.labels {
-	margin-top: 0.875rem;
+/* The title with labels such as "AI Assisted" beside it; they wrap below on narrow screens. */
+.header {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 0.5rem 1rem;
+}
+
+/* A side remark under the description, such as a privacy note. */
+.note {
+	margin-top: 0.75rem;
+	font-size: 0.9375rem;
+	font-style: italic;
+	color: var(--text-muted);
 }
 
 .status {

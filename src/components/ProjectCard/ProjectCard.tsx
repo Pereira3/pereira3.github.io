@@ -3,6 +3,7 @@ import { ChevronDown, ExternalLink } from "lucide-react";
 import { FaGithub } from "react-icons/fa6";
 import type { Project } from "@/data/projects";
 import { AiBadge } from "@/components/AiBadge/AiBadge";
+import { Tag } from "@/components/Tag/Tag";
 import page from "@/styles/Page.module.css";
 import styles from "@/components/ProjectCard/ProjectCard.module.css";
 
@@ -29,17 +30,15 @@ export function ProjectCard({
 	return (
 		<article className={styles.card}>
 			<div className={styles.heading}>
-				<Heading className={styles.title}>{project.title}</Heading>
+				{/* The title with labels such as "AI Assisted" beside it, the year on the right. */}
+				<div className={styles.titleRow}>
+					<Heading className={styles.title}>{project.title}</Heading>
+					{project.aiAssisted && <AiBadge />}
+				</div>
 				{project.year && (
 					<span className={styles.year}>{project.year}</span>
 				)}
 			</div>
-
-			{project.aiAssisted && (
-				<p className={styles.labels}>
-					<AiBadge />
-				</p>
-			)}
 
 			{project.description && (
 				<p className={styles.description}>{project.description}</p>
@@ -49,8 +48,8 @@ export function ProjectCard({
 				{project.tags && project.tags.length > 0 && (
 					<ul className={styles.tags} aria-label="Built with">
 						{project.tags.map((tag) => (
-							<li key={tag} className={styles.tag}>
-								{tag}
+							<li key={tag}>
+								<Tag className={styles.tag}>{tag}</Tag>
 							</li>
 						))}
 					</ul>

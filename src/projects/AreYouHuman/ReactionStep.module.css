@@ -1,8 +1,3 @@
-.instruction {
-	font-size: 1.125rem;
-	font-weight: 650;
-}
-
 .area {
 	position: relative;
 	display: grid;
@@ -40,10 +35,4 @@
 	to {
 		scale: 0;
 	}
-}
-
-.count {
-	font-size: 0.875rem;
-	font-weight: 600;
-	color: var(--text-muted);
 }

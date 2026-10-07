@@ -1,8 +1,3 @@
-.instruction {
-	font-size: 1.125rem;
-	font-weight: 650;
-}
-
 /* Two lanes of road, with a checkered finish line on the right. */
 .track {
 	--car: 2.5rem;
@@ -126,4 +121,9 @@
 .wrong:focus-visible {
 	border-color: #e5484d;
 	outline-color: #e5484d;
+}
+
+/* The phrase count and the speed in words per minute, with digits that don't jiggle. */
+.stats {
+	font-variant-numeric: tabular-nums;
 }

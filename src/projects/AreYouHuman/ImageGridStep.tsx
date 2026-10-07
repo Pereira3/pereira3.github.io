@@ -92,9 +92,9 @@ export function ImageGridStep({ pass, fail }: StepProps) {
 
 	return (
 		<>
-			<div className={styles.prompt}>
+			<div className={shared.prompt}>
 				<span>Select all squares with</span>
-				<strong>{target.name}</strong>
+				<strong className={styles.target}>{target.name}</strong>
 			</div>
 
 			<ul className={styles.grid}>

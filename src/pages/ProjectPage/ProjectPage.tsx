@@ -28,15 +28,15 @@ export function ProjectPage() {
 		<article>
 			<title>{pageTitle(project.title)}</title>
 
-			<h1 className={page.title}>{project.title}</h1>
-			{project.aiAssisted && (
-				<p className={styles.labels}>
-					<AiBadge />
-				</p>
-			)}
+			{/* The label sits beside the title, outside the heading, so the heading is just the name. */}
+			<div className={styles.header}>
+				<h1 className={page.title}>{project.title}</h1>
+				{project.aiAssisted && <AiBadge />}
+			</div>
 			{project.description && (
 				<p className={page.lead}>{project.description}</p>
 			)}
+			{project.note && <p className={styles.note}>{project.note}</p>}
 
 			{/* Its own Suspense keeps the title and description on screen
 			    while the project downloads. */}
